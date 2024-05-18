@@ -6,23 +6,23 @@
 
 ### 1- Login page
 
-![Alt text](mockups/Login page.png?raw=true "Title")
+![Alt text](mockups/LoginPage.png?raw=true "Title")
 
 ### 2- Register page
 
-![Alt text](mockups/Register page.png?raw=true "Title")
+![Alt text](mockups/RegisterPage.png?raw=true "Title")
 
 ### 3- Choose function page
 
-![Alt text](mockups/choose function page.png?raw=true "Title")
+![Alt text](mockups/ChooseFunctionPage.png?raw=true "Title")
 
 ### 4- Add Mitarbeiter page
 
-![Alt text](mockups/Add Mitarbeiter page.png?raw=true "Title")
+![Alt text](mockups/AddMitarbeiterPage.png?raw=true "Title")
 
 ### 5- Add Mitarbeiter page
 
-![Alt text](mockups/mitarbeiter verwaltung page.png?raw=true "Title")
+![Alt text](mockups/MitarbeiterVerwaltungPage.png?raw=true "Title")
 
 ### 6- Fehler Meldung page
 
