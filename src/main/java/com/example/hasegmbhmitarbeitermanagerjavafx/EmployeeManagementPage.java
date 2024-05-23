@@ -25,7 +25,7 @@ public class EmployeeManagementPage
 
     private Button registerButton;
 
-    public Scene loginPageScene(Stage primaryStage) throws FileNotFoundException {
+    public Scene employeeManagementPageScene(Stage primaryStage) throws FileNotFoundException {
 
         Screen screen = Screen.getPrimary();
         // Get the visual bounds of the primary screen

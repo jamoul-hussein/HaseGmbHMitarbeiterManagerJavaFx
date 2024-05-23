@@ -22,14 +22,17 @@ public class Main extends Application {
         Scene scene2 = registerPage.registerPageScene(primaryStage);
 
         EmployeeManagementPage employeeManagementPage = new EmployeeManagementPage();
-        Scene scene3 = employeeManagementPage.loginPageScene(primaryStage);
+        Scene scene3 = employeeManagementPage.employeeManagementPageScene(primaryStage);
+        
+        AddEmployeePage addEmployee = new AddEmployeePage();
+        Scene scene4 = addEmployee.addEmployeePageScene(primaryStage);
 
         // Button click actions
         loginPage.getRegisterButton().setOnAction(e -> primaryStage.setScene(scene2));
         registerPage.getBackToLoginBtn().setOnAction(e -> primaryStage.setScene(scene1));
 
         primaryStage.setTitle("Hase GmbH");
-        primaryStage.setScene(scene1);
+        primaryStage.setScene(scene4);
         primaryStage.show();
     }
 }
