@@ -26,13 +26,18 @@ public class Main extends Application {
         
         AddEmployeePage addEmployee = new AddEmployeePage();
         Scene scene4 = addEmployee.addEmployeePageScene(primaryStage);
+        
+        ChooseFunctionPage chooseFunctionPage = new ChooseFunctionPage();
+        Scene scene5 = chooseFunctionPage.chooseFunctionScene(primaryStage);
+        
+        
 
         // Button click actions
         loginPage.getRegisterButton().setOnAction(e -> primaryStage.setScene(scene2));
         registerPage.getBackToLoginBtn().setOnAction(e -> primaryStage.setScene(scene1));
 
         primaryStage.setTitle("Hase GmbH");
-        primaryStage.setScene(scene4);
+        primaryStage.setScene(scene5);
         primaryStage.show();
     }
 }
