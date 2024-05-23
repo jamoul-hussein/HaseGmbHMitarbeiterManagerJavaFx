@@ -1,10 +1,12 @@
 package com.example.hasegmbhmitarbeitermanagerjavafx;
 
-import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -14,6 +16,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class RegisterPage {
+    private Button backToLoginButton;
 
     public Scene registerPageScene(Stage primaryStage) {
 
@@ -96,20 +99,20 @@ public class RegisterPage {
         registerButton.setPrefWidth(screenWidth / 2);
         registerButton.setPrefHeight(100);
 
-        Button loginButton = new Button();
-        loginButton.setStyle("-fx-background-color: #C3C3C3;" +
+        this.backToLoginButton = new Button();
+        this.backToLoginButton.setStyle("-fx-background-color: #C3C3C3;" +
                 "-fx-text-fill: #ffffff; " +
                 "-fx-font-size: 20px; " +
                 "-fx-border-radius: 0px;" +
                 "-fx-text-fill: #52321D;");
 
-        loginButton.setText("ZURÜCK ZU LOGIN");
-        loginButton.setPrefWidth(screenWidth / 2);
-        loginButton.setPrefHeight(100);
+        this.backToLoginButton.setText("ZURÜCK ZU LOGIN");
+        this.backToLoginButton.setPrefWidth(screenWidth / 2);
+        this.backToLoginButton.setPrefHeight(100);
 
 
         HBox footerHbox = new HBox();
-        footerHbox.getChildren().addAll(registerButton, loginButton);
+        footerHbox.getChildren().addAll(registerButton, this.backToLoginButton);
 
         // root
         BorderPane root = new BorderPane();
@@ -119,8 +122,11 @@ public class RegisterPage {
         root.setStyle("-fx-background-color: " + Styles.backgroundColor);
 
 
-
         Scene scene = new Scene(root, 1024, 768);
         return scene;
+    }
+
+    public Button getBackToLoginBtn() {
+        return this.backToLoginButton;
     }
 }
