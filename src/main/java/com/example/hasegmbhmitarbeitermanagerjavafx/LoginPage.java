@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 public class LoginPage {
 
     private Button registerButton;
+    private Button loginButton;
 
     public Scene loginPageScene(Stage primaryStage) {
 
@@ -83,15 +84,15 @@ public class LoginPage {
         this.registerButton.setPrefWidth(screenWidth / 2);
         this.registerButton.setPrefHeight(100);
 
-        Button loginButton = new Button();
-        loginButton.setStyle("-fx-background-color: #52321D;" +
+        this.loginButton = new Button();
+        this.loginButton.setStyle("-fx-background-color: #52321D;" +
                 "-fx-text-fill: #ffffff; " +
                 "-fx-font-size: 20px; " +
                 "-fx-border-radius: 0px; ");
 
-        loginButton.setText("LOGIN");
-        loginButton.setPrefWidth(screenWidth / 2);
-        loginButton.setPrefHeight(100);
+        this.loginButton.setText("LOGIN");
+        this.loginButton.setPrefWidth(screenWidth / 2);
+        this.loginButton.setPrefHeight(100);
 
 
         HBox footerHbox = new HBox();
@@ -111,5 +112,8 @@ public class LoginPage {
 
     public Button getRegisterButton() {
         return this.registerButton;
+    }
+    public Button getLoginButton() {
+        return this.loginButton;
     }
 }

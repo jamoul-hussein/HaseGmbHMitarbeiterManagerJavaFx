@@ -24,7 +24,7 @@ import java.nio.file.Paths;
 
 public class EmployeeManagementPage {
 
-    private Button registerButton;
+    private Hyperlink addEmployeeLink;
 
     public Scene employeeManagementPageScene(Stage primaryStage) throws FileNotFoundException {
 
@@ -73,13 +73,13 @@ public class EmployeeManagementPage {
         searchSection.getChildren().addAll(searchButton, textField);
         searchSection.setSpacing(20);
 
-        Hyperlink addEmployeeLink = new Hyperlink("+ HINZUFÜGEN");
-        addEmployeeLink.setFont(Font.font("Inter", 22));
-        addEmployeeLink.setStyle(Styles.labelStyle);
-        addEmployeeLink.setPrefWidth(200);
+        this.addEmployeeLink = new Hyperlink("+ HINZUFÜGEN");
+        this.addEmployeeLink.setFont(Font.font("Inter", 22));
+        this.addEmployeeLink.setStyle(Styles.labelStyle);
+        this.addEmployeeLink.setPrefWidth(200);
 
         HBox searchAndAddEmployeeSection = new HBox();
-        searchAndAddEmployeeSection.getChildren().addAll(searchSection, addEmployeeLink);
+        searchAndAddEmployeeSection.getChildren().addAll(searchSection, this.addEmployeeLink);
         searchAndAddEmployeeSection.setSpacing(300);
         searchAndAddEmployeeSection.setPadding(new Insets(80, 0, 0, 140));
 
@@ -101,7 +101,7 @@ public class EmployeeManagementPage {
                 + "-fx-border-radius: 0px; ");
 
         HBox actionSection = new HBox(200, deleteButton, editButton);
-        actionSection.setPadding(new Insets(0, 140, 0 , 140));
+        actionSection.setPadding(new Insets(0, 140, 0, 140));
 
         VBox vBox = new VBox();
         vBox.getChildren().addAll(searchAndAddEmployeeSection, tableView, actionSection);
@@ -116,20 +116,6 @@ public class EmployeeManagementPage {
         Scene scene = new Scene(root, 1024, 768);
 
         return scene;
-    }
-
-    private String loadSVGFile(String filePath) {
-        try {
-            // Read SVG file content as a string
-            return new String(Files.readAllBytes(Paths.get(filePath)));
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public Button getRegisterButton() {
-        return this.registerButton;
     }
 
     private TableView renderTable() {
@@ -178,5 +164,9 @@ public class EmployeeManagementPage {
         tableView.setItems(data);
 
         return tableView;
+    }
+
+    public Hyperlink getAddEmployeeLink() {
+        return this.addEmployeeLink;
     }
 }

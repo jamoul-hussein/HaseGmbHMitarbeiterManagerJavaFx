@@ -21,23 +21,32 @@ public class Main extends Application {
         RegisterPage registerPage = new RegisterPage();
         Scene scene2 = registerPage.registerPageScene(primaryStage);
 
+        ChooseFunctionPage chooseFunctionPage = new ChooseFunctionPage();
+        Scene scene3 = chooseFunctionPage.chooseFunctionScene(primaryStage);
+
         EmployeeManagementPage employeeManagementPage = new EmployeeManagementPage();
-        Scene scene3 = employeeManagementPage.employeeManagementPageScene(primaryStage);
+        Scene scene4 = employeeManagementPage.employeeManagementPageScene(primaryStage);
         
         AddEmployeePage addEmployee = new AddEmployeePage();
-        Scene scene4 = addEmployee.addEmployeePageScene(primaryStage);
-        
-        ChooseFunctionPage chooseFunctionPage = new ChooseFunctionPage();
-        Scene scene5 = chooseFunctionPage.chooseFunctionScene(primaryStage);
-        
-        
+        Scene scene5 = addEmployee.addEmployeePageScene(primaryStage);
 
         // Button click actions
         loginPage.getRegisterButton().setOnAction(e -> primaryStage.setScene(scene2));
+
         registerPage.getBackToLoginBtn().setOnAction(e -> primaryStage.setScene(scene1));
 
+        loginPage.getLoginButton().setOnAction(e -> primaryStage.setScene(scene3));
+
+        chooseFunctionPage.getEmployeemgmtButton().setOnAction(e -> primaryStage.setScene(scene4));
+
+        employeeManagementPage.getAddEmployeeLink().setOnAction(e -> primaryStage.setScene(scene5));
+
+        addEmployee.getGobackToTableLink().setOnAction(e -> primaryStage.setScene(scene4));
+
+        addEmployee.getSaveButton().setOnAction(e -> primaryStage.setScene(scene4));
+
         primaryStage.setTitle("Hase GmbH");
-        primaryStage.setScene(scene3);
+        primaryStage.setScene(scene1);
         primaryStage.show();
     }
 }

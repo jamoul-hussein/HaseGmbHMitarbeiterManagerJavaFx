@@ -17,7 +17,9 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class AddEmployeePage {
-	private Button backToLoginButton;
+	private Hyperlink gobackLink;
+
+	private Button saveButton;
 
 	public Scene addEmployeePageScene(Stage primaryStage) {
 
@@ -99,29 +101,27 @@ public class AddEmployeePage {
 		telefonHbox.setSpacing(30);
 
 		// ==========================================================
-		Hyperlink gobackLink = new Hyperlink("<< zurück");
-		gobackLink.setFont(Font.font("Inter", 22));
-		gobackLink.setStyle(Styles.labelStyle);
-		gobackLink.setPrefWidth(200);
+		this.gobackLink = new Hyperlink("<< zurück");
+		this.gobackLink.setFont(Font.font("Inter", 22));
+		this.gobackLink.setStyle(Styles.labelStyle);
+		this.gobackLink.setPrefWidth(200);
 		
-		Button saveButton = new Button();
-		saveButton.setText("SPEICHERN");
-		saveButton.setFont(Font.font("Inter", 22));
-		saveButton.setPrefWidth(500);
-		saveButton.setStyle("-fx-background-color: #52321D;" + "-fx-text-fill: #ffffff; " + "-fx-font-size: 20px; "
+		this.saveButton = new Button();
+		this.saveButton.setText("SPEICHERN");
+		this.saveButton.setFont(Font.font("Inter", 22));
+		this.saveButton.setPrefWidth(500);
+		this.saveButton.setStyle("-fx-background-color: #52321D;" + "-fx-text-fill: #ffffff; " + "-fx-font-size: 20px; "
 				+ "-fx-border-radius: 0px; ");
 		
 		
 		HBox buttonsHbox = new HBox();
 		buttonsHbox.setPadding(new Insets(60, 0, 0, 140));
-		buttonsHbox.getChildren().addAll(gobackLink, saveButton);
+		buttonsHbox.getChildren().addAll(this.gobackLink, this.saveButton);
 		buttonsHbox.setSpacing(30);
 		
 
 		VBox vBox = new VBox();
 		vBox.getChildren().addAll(firstnameHbox, lastNameHbox, emailHbox, telefonHbox, buttonsHbox);
-
-		
 
 		// root
 		BorderPane root = new BorderPane();
@@ -133,7 +133,11 @@ public class AddEmployeePage {
 		return scene;
 	}
 
-	public Button getBackToLoginBtn() {
-		return this.backToLoginButton;
+	public Hyperlink getGobackToTableLink() {
+		return this.gobackLink;
+	}
+
+	public Button getSaveButton() {
+		return this.saveButton;
 	}
 }
