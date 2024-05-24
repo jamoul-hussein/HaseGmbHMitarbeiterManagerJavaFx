@@ -1,27 +1,28 @@
 package com.example.hasegmbhmitarbeitermanagerjavafx;
 
-import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class EmployeeManagementPage
-{
+public class EmployeeManagementPage {
 
     private Button registerButton;
 
@@ -35,7 +36,7 @@ public class EmployeeManagementPage
 
 
         Text textHeader = new Text();
-        textHeader.setText("LOGIN");
+        textHeader.setText("MITARBEITER VERWALTEN");
         textHeader.setFont(Font.font("Inter", 40));
         textHeader.setStyle(Styles.headerStyle);
 
@@ -45,36 +46,66 @@ public class EmployeeManagementPage
 
 
         // SVG content
-/*
-        String svgContent = "M256,64C150.13,64,64,150.13,64,256s86.13,192,192,192,192-86.13,192-192S361.87,64,256,64Zm80,294.63-54.15-54.15a88.08,88.08,0,1,1,22.63-22.63L358.63,336Z";
+        String svgContent = "M 21 3 C 11.6 3 4 10.6 4 20 C 4 29.4 11.6 37 21 37 C 24.354553 37 27.47104 36.01984 30.103516 34.347656 L 42.378906 46.621094 L 46.621094 42.378906 L 34.523438 30.279297 C 36.695733 27.423994 38 23.870646 38 20 C 38 10.6 30.4 3 21 3 z M 21 7 C 28.2 7 34 12.8 34 20 C 34 27.2 28.2 33 21 33 C 13.8 33 8 27.2 8 20 C 8 12.8 13.8 7 21 7 z";
 
         // Create an SVGPath object and set its content
         SVGPath svgPath = new SVGPath();
         svgPath.setContent(svgContent);
-        svgPath.setStyle("-fx-scale-x: 0.1; -fx-scale-y: 0.1;");
-*/
+        svgPath.setFill(Color.WHITE); // Set the fill color to white
+        svgPath.setScaleX(0.5); // Scale the SVG to desired size
+        svgPath.setScaleY(0.5);
 
+        // Create a TextField
         TextField textField = new TextField();
         textField.setStyle(Styles.inputFieldStyle);
-        textField.setPrefWidth(500);
+        textField.setFont(Font.font("Inter", 20));
+        textField.setPrefWidth(200);
+        textField.setPadding(new Insets(27, 0, 0, 0));
 
+        // Create a Button and set the SVGPath as its graphic
         Button searchButton = new Button();
-        searchButton.setStyle("-fx-background-color: #52321D;" +
-                "-fx-text-fill: #ffffff; " +
-                "-fx-font-size: 20px; " +
-                "-fx-border-radius: 0px; ");
+        searchButton.setStyle("-fx-background-color: #52321D; -fx-text-fill: #ffffff; -fx-border-radius: 0px;");
+        searchButton.setGraphic(svgPath); // Set the SVG as the button's graphic
+        searchButton.setPrefWidth(25);
+        searchButton.setPrefHeight(15);
 
-        searchButton.setText("SEARCH");
-        searchButton.setPrefWidth(20);
-        searchButton.setPrefHeight(20);
+        HBox searchSection = new HBox();
+        searchSection.getChildren().addAll(searchButton, textField);
+        searchSection.setSpacing(20);
+
+        Hyperlink addEmployeeLink = new Hyperlink("+ HINZUFÜGEN");
+        addEmployeeLink.setFont(Font.font("Inter", 22));
+        addEmployeeLink.setStyle(Styles.labelStyle);
+        addEmployeeLink.setPrefWidth(200);
 
         HBox searchAndAddEmployeeSection = new HBox();
+        searchAndAddEmployeeSection.getChildren().addAll(searchSection, addEmployeeLink);
+        searchAndAddEmployeeSection.setSpacing(300);
+        searchAndAddEmployeeSection.setPadding(new Insets(80, 0, 0, 140));
 
-        searchAndAddEmployeeSection.getChildren().addAll(searchButton, textField);
+        TableView tableView = this.renderTable();
+
+        //=============================================================
+        Button deleteButton = new Button();
+        deleteButton.setText("LÖSCHEN");
+        deleteButton.setFont(Font.font("Inter", 22));
+        deleteButton.setPrefWidth(500);
+        deleteButton.setStyle("-fx-background-color: #52321D;" + "-fx-text-fill: #ffffff; " + "-fx-font-size: 20px; "
+                + "-fx-border-radius: 0px; ");
+
+        Button editButton = new Button();
+        editButton.setText("ÄNDERN");
+        editButton.setFont(Font.font("Inter", 22));
+        editButton.setPrefWidth(500);
+        editButton.setStyle("-fx-background-color: #52321D;" + "-fx-text-fill: #ffffff; " + "-fx-font-size: 20px; "
+                + "-fx-border-radius: 0px; ");
+
+        HBox actionSection = new HBox(200, deleteButton, editButton);
+        actionSection.setPadding(new Insets(0, 140, 0 , 140));
 
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(searchAndAddEmployeeSection);
-
+        vBox.getChildren().addAll(searchAndAddEmployeeSection, tableView, actionSection);
+        vBox.setSpacing(30);
 
         // root
         BorderPane root = new BorderPane();
@@ -86,6 +117,7 @@ public class EmployeeManagementPage
 
         return scene;
     }
+
     private String loadSVGFile(String filePath) {
         try {
             // Read SVG file content as a string
@@ -96,9 +128,55 @@ public class EmployeeManagementPage
         }
     }
 
-
     public Button getRegisterButton() {
         return this.registerButton;
     }
 
+    private TableView renderTable() {
+        // Create columns
+        TableColumn<Employee, Integer> numberColumn = new TableColumn<>("Number");
+        TableColumn<Employee, String> firstNameColumn = new TableColumn<>("First Name");
+        TableColumn<Employee, String> lastNameColumn = new TableColumn<>("Last Name");
+        TableColumn<Employee, String> emailColumn = new TableColumn<>("Email");
+        TableColumn<Employee, String> telephoneColumn = new TableColumn<>("Telephone");
+
+        // Set column widths (optional)
+        numberColumn.setPrefWidth(100);
+        numberColumn.setResizable(true);
+
+        firstNameColumn.setPrefWidth(150);
+        firstNameColumn.setResizable(true);
+
+        lastNameColumn.setPrefWidth(150);
+        lastNameColumn.setResizable(true);
+
+        emailColumn.setPrefWidth(200);
+        emailColumn.setResizable(true);
+
+        telephoneColumn.setPrefWidth(150);
+        telephoneColumn.setResizable(true);
+
+
+        // Set cell value factories
+        numberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
+        numberColumn.setStyle("-fx-alignment: CENTER;");
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+        telephoneColumn.setCellValueFactory(new PropertyValueFactory<>("telephone"));
+
+        // Create a TableView
+        TableView<Employee> tableView = new TableView<>();
+        tableView.getColumns().addAll(numberColumn, firstNameColumn, lastNameColumn, emailColumn, telephoneColumn);
+        // Create sample data
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        ObservableList<Employee> data = FXCollections.observableArrayList(
+                new Employee(1, "John", "Doe", "john@example.com", "1234567890"),
+                new Employee(2, "Jane", "Smith", "jane@example.com", "9876543210")
+        );
+
+        tableView.setItems(data);
+
+        return tableView;
+    }
 }

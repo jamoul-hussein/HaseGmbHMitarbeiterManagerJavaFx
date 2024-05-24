@@ -37,7 +37,7 @@ public class Main extends Application {
         registerPage.getBackToLoginBtn().setOnAction(e -> primaryStage.setScene(scene1));
 
         primaryStage.setTitle("Hase GmbH");
-        primaryStage.setScene(scene5);
+        primaryStage.setScene(scene3);
         primaryStage.show();
     }
 }
