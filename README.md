@@ -1,3 +1,8 @@
+# Branch specific information
+
+- Implementation suggestions branch
+- Separate development from main branch
+
 # HaseGmbHMitarbeiterManagerJavaFx
 
 - UI/UX project for practicing desktop application user interfaces design and the frontend implementation in JavaFX.
