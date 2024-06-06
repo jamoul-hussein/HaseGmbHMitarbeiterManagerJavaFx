@@ -178,6 +178,6 @@ public class EmployeeManagementPage implements Page{
 
     @Override
     public void registerButtons() {
-        addEmployeeLink.setOnAction(e -> ViewController.getInstance().findScene("addEmployeePage"));    
+        addEmployeeLink.setOnAction(e -> stage.setScene(ViewController.getInstance().findScene("addEmployeePage")));    
     }
 }
