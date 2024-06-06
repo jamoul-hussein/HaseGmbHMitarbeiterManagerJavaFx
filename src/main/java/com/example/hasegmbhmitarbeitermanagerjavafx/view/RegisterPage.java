@@ -23,11 +23,6 @@ public class RegisterPage implements Page {
     private Scene scene;
     private Stage stage;
 
-    public Button getBackToLoginBtn() {
-        return this.backToLoginButton;
-    }
-
-
     @Override
     public void initializeScene(Stage stage) {
         

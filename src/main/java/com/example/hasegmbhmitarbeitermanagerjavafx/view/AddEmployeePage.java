@@ -22,14 +22,6 @@ public class AddEmployeePage implements Page{
 	private Scene scene;
 	private Stage stage;
 
-	public Hyperlink getGobackToTableLink() {
-		return this.gobackLink;
-	}
-
-	public Button getSaveButton() {
-		return this.saveButton;
-	}
-
 	@Override
 	public void initializeScene(Stage stage) {
 

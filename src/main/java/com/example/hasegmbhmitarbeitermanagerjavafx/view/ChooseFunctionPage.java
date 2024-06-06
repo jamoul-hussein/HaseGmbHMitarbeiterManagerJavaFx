@@ -21,10 +21,6 @@ public class ChooseFunctionPage implements Page {
     private Scene scene;
     private Stage stage;
 
-    public Button getEmployeemgmtButton(){
-        return this.employeemgmt;
-    }
-
     @Override
     public void initializeScene(Stage stage) {
 

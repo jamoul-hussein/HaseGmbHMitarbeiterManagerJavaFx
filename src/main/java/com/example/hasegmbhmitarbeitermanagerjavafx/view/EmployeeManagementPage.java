@@ -78,10 +78,6 @@ public class EmployeeManagementPage implements Page{
         return tableView;
     }
 
-    public Hyperlink getAddEmployeeLink() {
-        return this.addEmployeeLink;
-    }
-
     @Override
     public void initializeScene(Stage stage) {
 
