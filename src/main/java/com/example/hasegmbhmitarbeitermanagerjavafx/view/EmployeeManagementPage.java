@@ -1,7 +1,6 @@
 package com.example.hasegmbhmitarbeitermanagerjavafx.view;
 
-import java.io.FileNotFoundException;
-
+import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ViewController;
 import com.example.hasegmbhmitarbeitermanagerjavafx.model.Employee;
 
 import javafx.collections.FXCollections;
@@ -25,11 +24,68 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class EmployeeManagementPage {
+public class EmployeeManagementPage implements Page{
 
     private Hyperlink addEmployeeLink;
+    private Scene scene;
+    private Stage stage;
 
-    public Scene employeeManagementPageScene(Stage primaryStage) throws FileNotFoundException {
+    private TableView renderTable() {
+        // Create columns
+        TableColumn<Employee, Integer> numberColumn = new TableColumn<>("Number");
+        TableColumn<Employee, String> firstNameColumn = new TableColumn<>("First Name");
+        TableColumn<Employee, String> lastNameColumn = new TableColumn<>("Last Name");
+        TableColumn<Employee, String> emailColumn = new TableColumn<>("Email");
+        TableColumn<Employee, String> telephoneColumn = new TableColumn<>("Telephone");
+
+        // Set column widths (optional)
+        numberColumn.setPrefWidth(100);
+        numberColumn.setResizable(true);
+
+        firstNameColumn.setPrefWidth(150);
+        firstNameColumn.setResizable(true);
+
+        lastNameColumn.setPrefWidth(150);
+        lastNameColumn.setResizable(true);
+
+        emailColumn.setPrefWidth(200);
+        emailColumn.setResizable(true);
+
+        telephoneColumn.setPrefWidth(150);
+        telephoneColumn.setResizable(true);
+
+
+        // Set cell value factories
+        numberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
+        numberColumn.setStyle("-fx-alignment: CENTER;");
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+        telephoneColumn.setCellValueFactory(new PropertyValueFactory<>("telephone"));
+
+        // Create a TableView
+        TableView<Employee> tableView = new TableView<>();
+        tableView.getColumns().addAll(numberColumn, firstNameColumn, lastNameColumn, emailColumn, telephoneColumn);
+        // Create sample data
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        ObservableList<Employee> data = FXCollections.observableArrayList(
+                new Employee(1, "John", "Doe", "john@example.com", "1234567890"),
+                new Employee(2, "Jane", "Smith", "jane@example.com", "9876543210")
+        );
+
+        tableView.setItems(data);
+
+        return tableView;
+    }
+
+    public Hyperlink getAddEmployeeLink() {
+        return this.addEmployeeLink;
+    }
+
+    @Override
+    public void initializeScene(Stage stage) {
+
+        this.stage = stage;
 
         Screen screen = Screen.getPrimary();
         // Get the visual bounds of the primary screen
@@ -116,60 +172,16 @@ public class EmployeeManagementPage {
         root.setCenter(vBox);
         root.setStyle("-fx-background-color: " + Styles.backgroundColor);
 
-        Scene scene = new Scene(root, 1024, 768);
-
-        return scene;
+        this.scene = new Scene(root, 1024, 768);
     }
 
-    private TableView renderTable() {
-        // Create columns
-        TableColumn<Employee, Integer> numberColumn = new TableColumn<>("Number");
-        TableColumn<Employee, String> firstNameColumn = new TableColumn<>("First Name");
-        TableColumn<Employee, String> lastNameColumn = new TableColumn<>("Last Name");
-        TableColumn<Employee, String> emailColumn = new TableColumn<>("Email");
-        TableColumn<Employee, String> telephoneColumn = new TableColumn<>("Telephone");
-
-        // Set column widths (optional)
-        numberColumn.setPrefWidth(100);
-        numberColumn.setResizable(true);
-
-        firstNameColumn.setPrefWidth(150);
-        firstNameColumn.setResizable(true);
-
-        lastNameColumn.setPrefWidth(150);
-        lastNameColumn.setResizable(true);
-
-        emailColumn.setPrefWidth(200);
-        emailColumn.setResizable(true);
-
-        telephoneColumn.setPrefWidth(150);
-        telephoneColumn.setResizable(true);
-
-
-        // Set cell value factories
-        numberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
-        numberColumn.setStyle("-fx-alignment: CENTER;");
-        firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-        telephoneColumn.setCellValueFactory(new PropertyValueFactory<>("telephone"));
-
-        // Create a TableView
-        TableView<Employee> tableView = new TableView<>();
-        tableView.getColumns().addAll(numberColumn, firstNameColumn, lastNameColumn, emailColumn, telephoneColumn);
-        // Create sample data
-        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        ObservableList<Employee> data = FXCollections.observableArrayList(
-                new Employee(1, "John", "Doe", "john@example.com", "1234567890"),
-                new Employee(2, "Jane", "Smith", "jane@example.com", "9876543210")
-        );
-
-        tableView.setItems(data);
-
-        return tableView;
+    @Override
+    public Scene getScene() {
+        return this.scene;
     }
 
-    public Hyperlink getAddEmployeeLink() {
-        return this.addEmployeeLink;
+    @Override
+    public void registerButtons() {
+        addEmployeeLink.setOnAction(e -> ViewController.getInstance().findScene("addEmployeePage"));    
     }
 }

@@ -1,5 +1,7 @@
 package com.example.hasegmbhmitarbeitermanagerjavafx.view;
 
+import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ViewController;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -15,10 +17,21 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class RegisterPage {
+public class RegisterPage implements Page {
+    
     private Button backToLoginButton;
+    private Scene scene;
+    private Stage stage;
 
-    public Scene registerPageScene(Stage primaryStage) {
+    public Button getBackToLoginBtn() {
+        return this.backToLoginButton;
+    }
+
+
+    @Override
+    public void initializeScene(Stage stage) {
+        
+        this.stage = stage;
 
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
@@ -121,12 +134,17 @@ public class RegisterPage {
         root.setBottom(footerHbox);
         root.setStyle("-fx-background-color: " + Styles.backgroundColor);
 
+        this.scene = new Scene(root, 1024, 768);
+    }
 
-        Scene scene = new Scene(root, 1024, 768);
+    @Override
+    public Scene getScene() {
         return scene;
     }
 
-    public Button getBackToLoginBtn() {
-        return this.backToLoginButton;
+    @Override
+    public void registerButtons() {
+        Scene scene = ViewController.getInstance().findScene("loginPage");
+        backToLoginButton.setOnAction(e -> stage.setScene(scene));
     }
 }

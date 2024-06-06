@@ -1,6 +1,8 @@
 package com.example.hasegmbhmitarbeitermanagerjavafx.view;
 
 
+import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ViewController;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -13,14 +15,21 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import java.io.FileNotFoundException;
-
-public class ChooseFunctionPage {
+public class ChooseFunctionPage implements Page {
 
     private Button employeemgmt;
+    private Scene scene;
+    private Stage stage;
 
-    public Scene chooseFunctionScene(Stage primaryStage) throws FileNotFoundException {
+    public Button getEmployeemgmtButton(){
+        return this.employeemgmt;
+    }
 
+    @Override
+    public void initializeScene(Stage stage) {
+
+        this.stage = stage;
+        
         Screen screen = Screen.getPrimary();
         // Get the visual bounds of the primary screen
         Rectangle2D bounds = screen.getVisualBounds();
@@ -85,12 +94,16 @@ public class ChooseFunctionPage {
         root.setCenter(buttonContainer);
         root.setStyle("-fx-background-color: " + Styles.backgroundColor);
 
-        Scene scene = new Scene(root, 1024, 768);
-
-        return scene;
+        this.scene = new Scene(root, 1024, 768);
     }
 
-    public Button getEmployeemgmtButton(){
-        return this.employeemgmt;
+    @Override
+    public Scene getScene() {
+        return this.scene;
+    }
+
+    @Override
+    public void registerButtons() {
+        employeemgmt.setOnAction(e -> stage.setScene(ViewController.getInstance().findScene("employeeManagementPage")));
     }
 }

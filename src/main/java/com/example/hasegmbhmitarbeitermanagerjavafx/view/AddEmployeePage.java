@@ -15,12 +15,25 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class AddEmployeePage {
+public class AddEmployeePage implements Page{
+	
 	private Hyperlink gobackLink;
-
 	private Button saveButton;
+	private Scene scene;
+	private Stage stage;
 
-	public Scene addEmployeePageScene(Stage primaryStage) {
+	public Hyperlink getGobackToTableLink() {
+		return this.gobackLink;
+	}
+
+	public Button getSaveButton() {
+		return this.saveButton;
+	}
+
+	@Override
+	public void initializeScene(Stage stage) {
+
+		this.stage = stage;
 
 		Screen screen = Screen.getPrimary();
 		Rectangle2D bounds = screen.getVisualBounds();
@@ -128,15 +141,17 @@ public class AddEmployeePage {
 		root.setCenter(vBox);
 		root.setStyle("-fx-background-color: " + Styles.backgroundColor);
 
-		Scene scene = new Scene(root, 1024, 768);
+		this.scene = new Scene(root, 1024, 768);
+	}
+	
+	@Override
+	public Scene getScene() {
 		return scene;
 	}
 
-	public Hyperlink getGobackToTableLink() {
-		return this.gobackLink;
+	@Override
+	public void registerButtons() {
+		//This page doesnt have buttons
 	}
 
-	public Button getSaveButton() {
-		return this.saveButton;
-	}
 }

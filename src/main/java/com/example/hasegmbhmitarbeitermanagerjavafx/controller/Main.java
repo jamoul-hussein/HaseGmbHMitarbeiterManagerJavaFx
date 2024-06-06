@@ -1,15 +1,18 @@
 package com.example.hasegmbhmitarbeitermanagerjavafx.controller;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import com.example.hasegmbhmitarbeitermanagerjavafx.view.AddEmployeePage;
 import com.example.hasegmbhmitarbeitermanagerjavafx.view.ChooseFunctionPage;
 import com.example.hasegmbhmitarbeitermanagerjavafx.view.EmployeeManagementPage;
 import com.example.hasegmbhmitarbeitermanagerjavafx.view.LoginPage;
+import com.example.hasegmbhmitarbeitermanagerjavafx.view.Page;
 import com.example.hasegmbhmitarbeitermanagerjavafx.view.RegisterPage;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -21,38 +24,35 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws FileNotFoundException {
         
+        //Create pages
         LoginPage loginPage = new LoginPage();
-        Scene scene1 = loginPage.loginPageScene(primaryStage);
-
         RegisterPage registerPage = new RegisterPage();
-        Scene scene2 = registerPage.registerPageScene(primaryStage);
-
         ChooseFunctionPage chooseFunctionPage = new ChooseFunctionPage();
-        Scene scene3 = chooseFunctionPage.chooseFunctionScene(primaryStage);
-
         EmployeeManagementPage employeeManagementPage = new EmployeeManagementPage();
-        Scene scene4 = employeeManagementPage.employeeManagementPageScene(primaryStage);
+        AddEmployeePage addEmployeePage = new AddEmployeePage();
         
-        AddEmployeePage addEmployee = new AddEmployeePage();
-        Scene scene5 = addEmployee.addEmployeePageScene(primaryStage);
+        //Add pages to list
 
-        // Button click actions
-        loginPage.getRegisterButton().setOnAction(e -> primaryStage.setScene(scene2));
+        List<Page> pages = new ArrayList<Page>(Arrays.asList(loginPage, registerPage, chooseFunctionPage, employeeManagementPage, addEmployeePage));
+        pages.forEach(page -> page.initializeScene(primaryStage));
 
-        registerPage.getBackToLoginBtn().setOnAction(e -> primaryStage.setScene(scene1));
+        //Get view controller and add all pages to it.
+        //With the controller, you can access it everywhere.
+        //In this case, I added them statically, soooorryy
 
-        loginPage.getLoginButton().setOnAction(e -> primaryStage.setScene(scene3));
-
-        chooseFunctionPage.getEmployeemgmtButton().setOnAction(e -> primaryStage.setScene(scene4));
-
-        employeeManagementPage.getAddEmployeeLink().setOnAction(e -> primaryStage.setScene(scene5));
-
-        addEmployee.getGobackToTableLink().setOnAction(e -> primaryStage.setScene(scene4));
-
-        addEmployee.getSaveButton().setOnAction(e -> primaryStage.setScene(scene4));
+        ViewController viewController = ViewController.getInstance();
+        viewController.register("loginPage", loginPage.getScene());
+        viewController.register("registerPage", registerPage.getScene());
+        viewController.register("chooseFunctionPage", chooseFunctionPage.getScene());
+        viewController.register("employeeManagementPage", employeeManagementPage.getScene());
+        viewController.register("addEmployeePage", addEmployeePage.getScene());
+        
+        //After registering all the pages, register all the buttons
+        
+        pages.forEach(page -> page.registerButtons());
 
         primaryStage.setTitle("Hase GmbH");
-        primaryStage.setScene(scene1);
+        primaryStage.setScene(viewController.findScene("loginPage"));
         primaryStage.show();
     }
 }
