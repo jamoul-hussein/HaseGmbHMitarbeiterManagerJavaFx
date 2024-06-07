@@ -5,7 +5,9 @@ import com.example.hasegmbhmitarbeitermanagerjavafx.controller.EmployeeControlle
 import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ViewManager;
 import com.example.hasegmbhmitarbeitermanagerjavafx.model.Employee;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -29,10 +31,13 @@ public class EmployeeManagementPage implements Page{
 
     private Hyperlink addEmployeeLink;
     private Button refreshButton;
+    private Button searchButton;
+    private TextField searchField;
     private Scene scene;
     private Stage stage;
     private TableView<Employee> tableView;
     private ObservableList<Employee> data;
+    private FilteredList<Employee> filteredItems;
 
     private TableView renderTable() {
         // Create columns
@@ -76,7 +81,7 @@ public class EmployeeManagementPage implements Page{
         EmployeeController employeeController = (EmployeeController) ControllerManager.getInstance().findController("employeeController");
 
         if(employeeController != null){
-            data = employeeController.getAllEmployees();
+            data = FXCollections.observableList(employeeController.getAllEmployees());
         }
 
         tableView.setItems(data);
@@ -116,19 +121,20 @@ public class EmployeeManagementPage implements Page{
         svgPath.setScaleX(0.5); // Scale the SVG to desired size
         svgPath.setScaleY(0.5);
 
-        // Create a TextField
-        TextField textField = new TextField();
-        textField.setStyle(Styles.inputFieldStyle);
-        textField.setFont(Font.font("Inter", 20));
-        textField.setPrefWidth(200);
-        textField.setPadding(new Insets(27, 0, 0, 0));
-
+        
         // Create a Button and set the SVGPath as its graphic
-        Button searchButton = new Button();
+        searchButton = new Button();
         searchButton.setStyle("-fx-background-color: #52321D; -fx-text-fill: #ffffff; -fx-border-radius: 0px;");
         searchButton.setGraphic(svgPath); // Set the SVG as the button's graphic
         searchButton.setPrefWidth(25);
         searchButton.setPrefHeight(15);
+        
+        // Create a TextField
+        searchField = new TextField();
+        searchField.setStyle(Styles.inputFieldStyle);
+        searchField.setFont(Font.font("Inter", 20));
+        searchField.setPrefWidth(200);
+        searchField.setPadding(new Insets(27, 0, 0, 0));
 
         // Create a Button and set the SVGPath as its graphic
         refreshButton = new Button();
@@ -139,7 +145,7 @@ public class EmployeeManagementPage implements Page{
         refreshButton.setPrefHeight(15);
 
         HBox searchSection = new HBox();
-        searchSection.getChildren().addAll(searchButton, textField, refreshButton);
+        searchSection.getChildren().addAll(searchButton, searchField, refreshButton);
         searchSection.setSpacing(20);
 
         this.addEmployeeLink = new Hyperlink("+ HINZUFÜGEN");
@@ -194,10 +200,21 @@ public class EmployeeManagementPage implements Page{
     public void registerButtons() {
         addEmployeeLink.setOnAction(e -> stage.setScene(ViewManager.getInstance().findScene("addEmployeePage")));    
         refreshButton.setOnAction(e -> refreshTable());
+        searchButton.setOnAction(e -> filter());
     }
-
 
     public void refreshTable() {
         tableView.refresh();
+    }
+
+    public void filter() {
+        
+        if(!searchField.getText().isEmpty()) {
+            tableView.setItems(data.filtered(p -> p.getNumber() == Integer.parseInt(searchField.getText())));
+        } else {
+            tableView.setItems(data);
+        }
+
+        refreshTable();
     }
 }

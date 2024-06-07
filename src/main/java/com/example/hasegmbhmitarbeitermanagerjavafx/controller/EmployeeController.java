@@ -10,12 +10,11 @@ import javafx.collections.ObservableList;
 
 public class EmployeeController implements Controller {
 
-    private ObservableList<Employee> employees;
+    private List<Employee> employees;
 
     @Override
     public void init() {
-        List<Employee> temp = new ArrayList<>();
-        employees = FXCollections.observableArrayList(temp);
+        employees = new ArrayList<>();
     }
 
     public boolean addEmployee(int id, String firstName, String lastName, String email, String telephone) {
@@ -40,7 +39,7 @@ public class EmployeeController implements Controller {
         return true;
     }
 
-    public ObservableList<Employee> getAllEmployees() {
+    public List<Employee> getAllEmployees() {
         return employees;
     }
 
