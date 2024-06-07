@@ -25,10 +25,14 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws FileNotFoundException {
         
         // Create controllers, initialize them
-        Controller controller = new TestController(); // <- example controller
-        List<Controller> controllers = new ArrayList<Controller>(Arrays.asList(controller));
-        controllers.forEach(c -> controller.init());
-        ControllerManager.getInstance().register("testController", controller);
+        Controller testController = new TestController(); // <- example controller
+        EmployeeController employeeController = new EmployeeController(); // <- example controller
+
+        List<Controller> controllers = new ArrayList<Controller>(Arrays.asList(testController, employeeController));
+        controllers.forEach(c -> c.init());
+        
+        ControllerManager.getInstance().register("testController", testController); //you can remove this controller
+        ControllerManager.getInstance().register("employeeController", employeeController);
 
         // ControllerManager is accessable everywhere.
         // Watch out for the scope. If you access a controller

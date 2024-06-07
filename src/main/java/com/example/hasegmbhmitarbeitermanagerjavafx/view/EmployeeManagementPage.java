@@ -1,9 +1,10 @@
 package com.example.hasegmbhmitarbeitermanagerjavafx.view;
 
+import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ControllerManager;
+import com.example.hasegmbhmitarbeitermanagerjavafx.controller.EmployeeController;
 import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ViewManager;
 import com.example.hasegmbhmitarbeitermanagerjavafx.model.Employee;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
@@ -27,8 +28,11 @@ import javafx.stage.Stage;
 public class EmployeeManagementPage implements Page{
 
     private Hyperlink addEmployeeLink;
+    private Button refreshButton;
     private Scene scene;
     private Stage stage;
+    private TableView<Employee> tableView;
+    private ObservableList<Employee> data;
 
     private TableView renderTable() {
         // Create columns
@@ -64,14 +68,16 @@ public class EmployeeManagementPage implements Page{
         telephoneColumn.setCellValueFactory(new PropertyValueFactory<>("telephone"));
 
         // Create a TableView
-        TableView<Employee> tableView = new TableView<>();
+        tableView = new TableView<>();
         tableView.getColumns().addAll(numberColumn, firstNameColumn, lastNameColumn, emailColumn, telephoneColumn);
         // Create sample data
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        ObservableList<Employee> data = FXCollections.observableArrayList(
-                new Employee(1, "John", "Doe", "john@example.com", "1234567890"),
-                new Employee(2, "Jane", "Smith", "jane@example.com", "9876543210")
-        );
+
+        EmployeeController employeeController = (EmployeeController) ControllerManager.getInstance().findController("employeeController");
+
+        if(employeeController != null){
+            data = employeeController.getAllEmployees();
+        }
 
         tableView.setItems(data);
 
@@ -124,8 +130,16 @@ public class EmployeeManagementPage implements Page{
         searchButton.setPrefWidth(25);
         searchButton.setPrefHeight(15);
 
+        // Create a Button and set the SVGPath as its graphic
+        refreshButton = new Button();
+        refreshButton.setStyle("-fx-background-color: #52321D; -fx-text-fill: #ffffff; -fx-border-radius: 0px;");
+        refreshButton.setText("refresh"); // Set the SVG as the button's graphic
+        refreshButton.setFont(Font.font("Inter", 22));
+        refreshButton.setPrefWidth(25);
+        refreshButton.setPrefHeight(15);
+
         HBox searchSection = new HBox();
-        searchSection.getChildren().addAll(searchButton, textField);
+        searchSection.getChildren().addAll(searchButton, textField, refreshButton);
         searchSection.setSpacing(20);
 
         this.addEmployeeLink = new Hyperlink("+ HINZUFÜGEN");
@@ -179,5 +193,11 @@ public class EmployeeManagementPage implements Page{
     @Override
     public void registerButtons() {
         addEmployeeLink.setOnAction(e -> stage.setScene(ViewManager.getInstance().findScene("addEmployeePage")));    
+        refreshButton.setOnAction(e -> refreshTable());
+    }
+
+
+    public void refreshTable() {
+        tableView.refresh();
     }
 }

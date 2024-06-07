@@ -1,5 +1,9 @@
 package com.example.hasegmbhmitarbeitermanagerjavafx.view;
 
+import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ControllerManager;
+import com.example.hasegmbhmitarbeitermanagerjavafx.controller.EmployeeController;
+import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ViewManager;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -19,6 +23,12 @@ public class AddEmployeePage implements Page{
 	
 	private Hyperlink gobackLink;
 	private Button saveButton;
+
+	private TextField firstnameField;
+	private TextField lastnameField;
+	private TextField emailField;
+	private TextField telephoneField;
+
 	private Scene scene;
 	private Stage stage;
 
@@ -47,13 +57,13 @@ public class AddEmployeePage implements Page{
 		firstnameLabel.setFont(Font.font("Inter", 22));
 		firstnameLabel.setPrefWidth(200);
 
-		TextField textField = new TextField();
-		textField.setStyle(Styles.inputFieldStyle);
-		textField.setPrefWidth(500);
+		firstnameField = new TextField();
+		firstnameField.setStyle(Styles.inputFieldStyle);
+		firstnameField.setPrefWidth(500);
 
 		HBox firstnameHbox = new HBox();
 		firstnameHbox.setPadding(new Insets(60, 0, 0, 140));
-		firstnameHbox.getChildren().addAll(firstnameLabel, textField);
+		firstnameHbox.getChildren().addAll(firstnameLabel, firstnameField);
 		firstnameHbox.setSpacing(30);
 
 		// ==========================================================
@@ -63,13 +73,13 @@ public class AddEmployeePage implements Page{
 		lastnameLabel.setFont(Font.font("Inter", 22));
 		lastnameLabel.setPrefWidth(200);
 
-		TextField lastnameTextfield = new TextField();
-		lastnameTextfield.setStyle(Styles.inputFieldStyle);
-		lastnameTextfield.setPrefWidth(500);
+		lastnameField = new TextField();
+		lastnameField.setStyle(Styles.inputFieldStyle);
+		lastnameField.setPrefWidth(500);
 
 		HBox lastNameHbox = new HBox();
 		lastNameHbox.setPadding(new Insets(60, 0, 0, 140));
-		lastNameHbox.getChildren().addAll(lastnameLabel, lastnameTextfield);
+		lastNameHbox.getChildren().addAll(lastnameLabel, lastnameField);
 		lastNameHbox.setSpacing(30);
 
 		// ==========================================================
@@ -79,13 +89,13 @@ public class AddEmployeePage implements Page{
 		emailLabel.setPrefWidth(200);
 		emailLabel.setWrapText(true);
 
-		TextField emailTextfield = new TextField();
-		emailTextfield.setStyle(Styles.inputFieldStyle);
-		emailTextfield.setPrefWidth(500);
+		emailField = new TextField();
+		emailField.setStyle(Styles.inputFieldStyle);
+		emailField.setPrefWidth(500);
 
 		HBox emailHbox = new HBox();
 		emailHbox.setPadding(new Insets(60, 0, 0, 140));
-		emailHbox.getChildren().addAll(emailLabel, emailTextfield);
+		emailHbox.getChildren().addAll(emailLabel, emailField);
 		emailHbox.setSpacing(30);
 
 		// ==========================================================
@@ -95,13 +105,13 @@ public class AddEmployeePage implements Page{
 		telefonLabel.setPrefWidth(200);
 		telefonLabel.setWrapText(true);
 
-		TextField telefonTextfield = new TextField();
-		telefonTextfield.setStyle(Styles.inputFieldStyle);
-		telefonTextfield.setPrefWidth(500);
+		telephoneField = new TextField();
+		telephoneField.setStyle(Styles.inputFieldStyle);
+		telephoneField.setPrefWidth(500);
 
 		HBox telefonHbox = new HBox();
 		telefonHbox.setPadding(new Insets(60, 0, 0, 140));
-		telefonHbox.getChildren().addAll(telefonLabel, telefonTextfield);
+		telefonHbox.getChildren().addAll(telefonLabel, telephoneField);
 		telefonHbox.setSpacing(30);
 
 		// ==========================================================
@@ -143,7 +153,15 @@ public class AddEmployeePage implements Page{
 
 	@Override
 	public void registerButtons() {
-		//This page doesnt have buttons
-	}
+		ViewManager viewManager = ViewManager.getInstance();
+		gobackLink.setOnAction(e -> stage.setScene(viewManager.findScene("employeeManagementPage")));
 
+		saveButton.setOnAction(e -> 
+			{
+				EmployeeController employeeController = (EmployeeController) ControllerManager.getInstance().findController("employeeController");
+				employeeController.addEmployee(employeeController.getAllEmployees().size(), firstnameField.getText(), lastnameField.getText(), emailField.getText(), telephoneField.getText());
+				stage.setScene(viewManager.findScene("employeeManagementPage"));
+			} 
+		);
+	}
 }
