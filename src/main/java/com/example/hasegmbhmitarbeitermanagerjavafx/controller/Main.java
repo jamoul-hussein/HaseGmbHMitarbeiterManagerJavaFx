@@ -24,6 +24,17 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws FileNotFoundException {
         
+        // Create controllers, initialize them
+        Controller controller = new TestController(); // <- example controller
+        List<Controller> controllers = new ArrayList<Controller>(Arrays.asList(controller));
+        controllers.forEach(c -> controller.init());
+        ControllerManager.getInstance().register("testController", controller);
+
+        // ControllerManager is accessable everywhere.
+        // Watch out for the scope. If you access a controller
+        // before or during the intialization (during Main.start()), you might
+        // get Exceptions, because not all controller instances exist yet
+        
         //Create pages
         LoginPage loginPage = new LoginPage();
         RegisterPage registerPage = new RegisterPage();

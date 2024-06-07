@@ -130,5 +130,8 @@ public class LoginPage implements Page {
         ViewManager controller = ViewManager.getInstance();
         registerButton.setOnAction(e -> stage.setScene(controller.findScene("registerPage")));
         loginButton.setOnAction(e -> stage.setScene(controller.findScene("chooseFunctionPage")));
-            }
+
+        TestController testController = (TestController) ControllerManager.getInstance().findController("testController");
+        loginButton.setOnAction(e -> System.out.println( testController.getHelloWorld()));
+    }
 }
