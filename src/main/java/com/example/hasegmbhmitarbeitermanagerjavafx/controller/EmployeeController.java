@@ -30,12 +30,14 @@ public class EmployeeController implements Controller {
 
     public boolean removeEmployee(int id) {
         
-        if(doesEmployeeExist(id)) {
-            System.err.println(String.format("Employee with id: %d already exists", id));
+        if(!doesEmployeeExist(id)) {
+            System.err.println(String.format("Employee with id: %d does not exist", id));
             return false;
         }
 
-        employees.remove(id);
+        Employee employee = employees.stream().filter(emp -> emp.getNumber()==id).toList().get(0);
+        employees.remove(employee);
+        
         return true;
     }
 

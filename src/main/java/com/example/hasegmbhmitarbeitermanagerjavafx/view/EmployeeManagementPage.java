@@ -13,6 +13,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -30,11 +31,17 @@ import javafx.stage.Stage;
 public class EmployeeManagementPage implements Page{
 
     private Hyperlink addEmployeeLink;
+
     private Button refreshButton;
     private Button searchButton;
+    private Button deleteButton;
+    private Button editButton;
+
     private TextField searchField;
+
     private Scene scene;
     private Stage stage;
+
     private TableView<Employee> tableView;
     private ObservableList<Employee> data;
     private FilteredList<Employee> filteredItems;
@@ -63,7 +70,6 @@ public class EmployeeManagementPage implements Page{
         telephoneColumn.setPrefWidth(150);
         telephoneColumn.setResizable(true);
 
-
         // Set cell value factories
         numberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
         numberColumn.setStyle("-fx-alignment: CENTER;");
@@ -75,7 +81,8 @@ public class EmployeeManagementPage implements Page{
         // Create a TableView
         tableView = new TableView<>();
         tableView.getColumns().addAll(numberColumn, firstNameColumn, lastNameColumn, emailColumn, telephoneColumn);
-        // Create sample data
+        
+        // Read in data
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         EmployeeController employeeController = (EmployeeController) ControllerManager.getInstance().findController("employeeController");
@@ -86,6 +93,8 @@ public class EmployeeManagementPage implements Page{
 
         tableView.setItems(data);
 
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        
         return tableView;
     }
 
@@ -161,14 +170,14 @@ public class EmployeeManagementPage implements Page{
         TableView tableView = this.renderTable();
 
         //=============================================================
-        Button deleteButton = new Button();
+        deleteButton = new Button();
         deleteButton.setText("LÖSCHEN");
         deleteButton.setFont(Font.font("Inter", 22));
         deleteButton.setPrefWidth(500);
         deleteButton.setStyle("-fx-background-color: #52321D;" + "-fx-text-fill: #ffffff; " + "-fx-font-size: 20px; "
                 + "-fx-border-radius: 0px; ");
 
-        Button editButton = new Button();
+        editButton = new Button();
         editButton.setText("ÄNDERN");
         editButton.setFont(Font.font("Inter", 22));
         editButton.setPrefWidth(500);
@@ -201,6 +210,8 @@ public class EmployeeManagementPage implements Page{
         addEmployeeLink.setOnAction(e -> stage.setScene(ViewManager.getInstance().findScene("addEmployeePage")));    
         refreshButton.setOnAction(e -> refreshTable());
         searchButton.setOnAction(e -> filter());
+        deleteButton.setOnAction(e -> delete());
+        
     }
 
     public void refreshTable() {
@@ -216,5 +227,25 @@ public class EmployeeManagementPage implements Page{
         }
 
         refreshTable();
+    }
+
+    public boolean edit() {
+        return false;
+    }
+
+    public boolean delete() {
+        
+        EmployeeController controller = (EmployeeController) ControllerManager.getInstance().findController("employeeController");
+        int id = tableView.getSelectionModel().getSelectedItem().getNumber();
+
+        if(!controller.doesEmployeeExist(id)) {
+            System.err.println(String.format("Employee with id: %d does not exist", id));
+            return false;
+        }
+
+        controller.removeEmployee(id);
+        
+        refreshTable();
+        return true;
     }
 }
