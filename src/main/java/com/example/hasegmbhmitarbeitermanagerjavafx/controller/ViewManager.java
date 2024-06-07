@@ -5,24 +5,24 @@ import java.util.HashMap;
 import javafx.scene.Scene;
 
 @SuppressWarnings("exports")
-public class ViewController {
+public class ViewManager {
     
-    private static ViewController instance;
+    private static ViewManager instance;
     private HashMap<String,Scene> scenes;
 
     /**
      * Just for initialization
      */
-    private ViewController() {
+    private ViewManager() {
         this.scenes = new HashMap<String,Scene>();
     }
 
     /**
      * Only return one instance
-     * @return ViewController instance
+     * @return ViewManager instance
      */
-    public static ViewController getInstance() {
-        return instance == null ? instance = new ViewController() : instance;
+    public static ViewManager getInstance() {
+        return instance == null ? instance = new ViewManager() : instance;
     }
     
     /**

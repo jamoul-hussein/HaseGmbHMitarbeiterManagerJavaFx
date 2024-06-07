@@ -1,7 +1,7 @@
 package com.example.hasegmbhmitarbeitermanagerjavafx.view;
 
 
-import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ViewController;
+import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ViewManager;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
@@ -100,6 +100,6 @@ public class ChooseFunctionPage implements Page {
 
     @Override
     public void registerButtons() {
-        employeemgmt.setOnAction(e -> stage.setScene(ViewController.getInstance().findScene("employeeManagementPage")));
+        employeemgmt.setOnAction(e -> stage.setScene(ViewManager.getInstance().findScene("employeeManagementPage")));
     }
 }

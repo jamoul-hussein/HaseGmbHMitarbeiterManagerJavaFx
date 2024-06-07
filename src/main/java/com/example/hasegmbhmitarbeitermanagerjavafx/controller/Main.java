@@ -40,19 +40,19 @@ public class Main extends Application {
         //With the controller, you can access it everywhere.
         //In this case, I added them statically, soooorryy
 
-        ViewController viewController = ViewController.getInstance();
-        viewController.register("loginPage", loginPage.getScene());
-        viewController.register("registerPage", registerPage.getScene());
-        viewController.register("chooseFunctionPage", chooseFunctionPage.getScene());
-        viewController.register("employeeManagementPage", employeeManagementPage.getScene());
-        viewController.register("addEmployeePage", addEmployeePage.getScene());
+        ViewManager viewManager = ViewManager.getInstance();
+        viewManager.register("loginPage", loginPage.getScene());
+        viewManager.register("registerPage", registerPage.getScene());
+        viewManager.register("chooseFunctionPage", chooseFunctionPage.getScene());
+        viewManager.register("employeeManagementPage", employeeManagementPage.getScene());
+        viewManager.register("addEmployeePage", addEmployeePage.getScene());
         
         //After registering all the pages, register all the buttons
         
         pages.forEach(page -> page.registerButtons());
 
         primaryStage.setTitle("Hase GmbH");
-        primaryStage.setScene(viewController.findScene("loginPage"));
+        primaryStage.setScene(viewManager.findScene("loginPage"));
         primaryStage.show();
     }
 }

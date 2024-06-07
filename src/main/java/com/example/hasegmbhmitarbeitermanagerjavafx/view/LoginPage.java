@@ -1,6 +1,8 @@
 package com.example.hasegmbhmitarbeitermanagerjavafx.view;
 
-import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ViewController;
+import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ControllerManager;
+import com.example.hasegmbhmitarbeitermanagerjavafx.controller.TestController;
+import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ViewManager;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
@@ -125,8 +127,8 @@ public class LoginPage implements Page {
 
     @Override
     public void registerButtons() {
-        ViewController controller = ViewController.getInstance();
+        ViewManager controller = ViewManager.getInstance();
         registerButton.setOnAction(e -> stage.setScene(controller.findScene("registerPage")));
         loginButton.setOnAction(e -> stage.setScene(controller.findScene("chooseFunctionPage")));
-    }
+            }
 }

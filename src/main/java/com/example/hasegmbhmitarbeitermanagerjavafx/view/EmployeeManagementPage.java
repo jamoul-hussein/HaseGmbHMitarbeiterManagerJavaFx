@@ -1,6 +1,6 @@
 package com.example.hasegmbhmitarbeitermanagerjavafx.view;
 
-import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ViewController;
+import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ViewManager;
 import com.example.hasegmbhmitarbeitermanagerjavafx.model.Employee;
 
 import javafx.collections.FXCollections;
@@ -178,6 +178,6 @@ public class EmployeeManagementPage implements Page{
 
     @Override
     public void registerButtons() {
-        addEmployeeLink.setOnAction(e -> stage.setScene(ViewController.getInstance().findScene("addEmployeePage")));    
+        addEmployeeLink.setOnAction(e -> stage.setScene(ViewManager.getInstance().findScene("addEmployeePage")));    
     }
 }
