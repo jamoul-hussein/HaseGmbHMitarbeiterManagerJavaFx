@@ -1,6 +1,9 @@
 package com.example.hasegmbhmitarbeitermanagerjavafx.view;
 
+import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ControllerManager;
+import com.example.hasegmbhmitarbeitermanagerjavafx.controller.LoginController;
 import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ViewManager;
+import com.example.hasegmbhmitarbeitermanagerjavafx.view.Error.ErrorPage;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
@@ -22,6 +25,11 @@ public class LoginPage implements Page {
 
     private Button registerButton;
     private Button loginButton;
+
+    private TextField usernameField;
+    private TextField passwordField;
+    private Hyperlink passwordForgetLink;
+
     private Scene scene;
     private Stage stage;
 
@@ -51,14 +59,14 @@ public class LoginPage implements Page {
         usernameLabel.setFont(Font.font("Inter", 22));
         usernameLabel.setPrefWidth(200);
 
-        TextField textField = new TextField();
-        textField.setStyle(Styles.inputFieldStyle);
-        textField.setPrefWidth(500);
+        usernameField = new TextField();
+        usernameField.setStyle(Styles.inputFieldStyle);
+        usernameField.setPrefWidth(500);
 
 
         HBox usernameHbox = new HBox();
         usernameHbox.setPadding(new Insets(100, 0, 0, 140));
-        usernameHbox.getChildren().addAll(usernameLabel, textField);
+        usernameHbox.getChildren().addAll(usernameLabel, usernameField);
         usernameHbox.setSpacing(30);
 
 
@@ -67,7 +75,7 @@ public class LoginPage implements Page {
         passwordLabel.setFont(Font.font("Inter", 22));
         passwordLabel.setPrefWidth(200);
 
-        PasswordField passwordField = new PasswordField();
+        passwordField = new PasswordField();
         passwordField.setStyle(Styles.inputFieldStyle);
         passwordField.setPrefWidth(500);
 
@@ -77,7 +85,7 @@ public class LoginPage implements Page {
         passwordHbox.setSpacing(30);
 
 
-        Hyperlink passwordForgetLink = new Hyperlink("PASSWORT vergessen?");
+        passwordForgetLink = new Hyperlink("PASSWORT vergessen?");
         passwordForgetLink.setFont(Font.font("Inter", 22));
         passwordForgetLink.setStyle(Styles.labelStyle);
         passwordForgetLink.setPadding(new Insets(100, 0, 0, 620));
@@ -127,6 +135,40 @@ public class LoginPage implements Page {
     public void registerButtons() {
         ViewManager controller = ViewManager.getInstance();
         registerButton.setOnAction(e -> stage.setScene(controller.findScene("registerPage")));
-        loginButton.setOnAction(e -> stage.setScene(controller.findScene("chooseFunctionPage")));
+        
+        loginButton.setOnAction(e -> 
+            {
+                boolean isAuthenticated = authenticate(usernameField.getText(), passwordField.getText());
+                if(isAuthenticated) {
+                    stage.setScene(controller.findScene("chooseFunctionPage"));
+                }
+                else {
+                    new ErrorPage().showError("Error", "Error with username or password");
+                }
+            }
+        );
+        
+        passwordForgetLink.setOnAction(e -> new ErrorPage().showError("Ha!", "Sounds like a you problem 😎"));
+
+    }
+
+    /**
+     * Check if user is authenticated.
+     * @param name
+     * @param password
+     * @return true, when name and password matches.
+     */
+    private boolean authenticate(String name, String password) {
+
+        LoginController loginController = (LoginController) ControllerManager.getInstance().findController("loginController");
+        
+        //Get users
+        if(!loginController.doesAccountExist(name)){
+            return false;
+        }
+        
+        return loginController.getAllAccounts()
+                              .stream()
+                              .anyMatch(user -> user.getName().equals(name) && user.getPassword().equals(password));
     }
 }

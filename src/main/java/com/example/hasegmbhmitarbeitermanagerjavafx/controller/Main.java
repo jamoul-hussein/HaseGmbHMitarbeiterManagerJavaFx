@@ -26,13 +26,15 @@ public class Main extends Application {
         
         // Create controllers, initialize them
         Controller testController = new TestController(); // <- example controller
-        EmployeeController employeeController = new EmployeeController(); // <- example controller
+        EmployeeController employeeController = new EmployeeController();
+        LoginController loginController = new LoginController();
 
-        List<Controller> controllers = new ArrayList<Controller>(Arrays.asList(testController, employeeController));
+        List<Controller> controllers = new ArrayList<Controller>(Arrays.asList(testController, employeeController, loginController));
         controllers.forEach(c -> c.init());
         
         ControllerManager.getInstance().register("testController", testController); //you can remove this controller
         ControllerManager.getInstance().register("employeeController", employeeController);
+        ControllerManager.getInstance().register("loginController", loginController);
 
         // ControllerManager is accessable everywhere.
         // Watch out for the scope. If you access a controller
