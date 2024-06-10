@@ -1,4 +1,4 @@
-package com.example.hasegmbhmitarbeitermanagerjavafx;
+package com.example.hasegmbhmitarbeitermanagerjavafx.pages;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;

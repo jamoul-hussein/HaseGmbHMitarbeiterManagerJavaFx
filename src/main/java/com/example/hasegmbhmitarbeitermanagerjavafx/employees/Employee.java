@@ -1,4 +1,4 @@
-package com.example.hasegmbhmitarbeitermanagerjavafx;
+package com.example.hasegmbhmitarbeitermanagerjavafx.employees;
 
 public class Employee {
     private int number;

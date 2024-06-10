@@ -1,10 +1,13 @@
-package com.example.hasegmbhmitarbeitermanagerjavafx;
+package com.example.hasegmbhmitarbeitermanagerjavafx.pages;
 
-import javafx.application.Application;
+import com.example.hasegmbhmitarbeitermanagerjavafx.Styles;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -13,28 +16,26 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class LoginPage {
+public class RegisterPage {
+    private Button backToLoginButton;
 
-    private Button registerButton;
-    private Button loginButton;
-
-    public Scene loginPageScene(Stage primaryStage) {
+    public Scene registerPageScene(Stage primaryStage) {
 
         Screen screen = Screen.getPrimary();
-        // Get the visual bounds of the primary screen
         Rectangle2D bounds = screen.getVisualBounds();
-        // Get the width of the screen
         double screenWidth = bounds.getWidth();
 
 
         Text textHeader = new Text();
-        textHeader.setText("LOGIN");
+        textHeader.setText("REGISTRIEREN");
         textHeader.setFont(Font.font("Inter", 60));
         textHeader.setStyle(Styles.headerStyle);
 
         HBox headerContainer = new HBox();
         headerContainer.setPadding(new Insets(100, 0, 0, 140));
         headerContainer.getChildren().add(textHeader);
+
+        //==========================================================
 
         Label usernameLabel = new Label("BENUTZERNAME");
         usernameLabel.setStyle(Styles.labelStyle);
@@ -52,6 +53,8 @@ public class LoginPage {
         usernameHbox.setSpacing(30);
 
 
+        //==========================================================
+
         Label passwordLabel = new Label("PASSWORT");
         passwordLabel.setStyle(Styles.labelStyle);
         passwordLabel.setFont(Font.font("Inter", 22));
@@ -67,36 +70,50 @@ public class LoginPage {
         passwordHbox.setSpacing(30);
 
 
-        Hyperlink passwordForgetLink = new Hyperlink("PASSWORT vergessen?");
-        passwordForgetLink.setFont(Font.font("Inter", 22));
-        passwordForgetLink.setStyle(Styles.labelStyle);
-        passwordForgetLink.setPadding(new Insets(100, 0, 0, 620));
+        //==========================================================
+        Label passwordRepeatLabel = new Label("PASSWORT wiederholen");
+        passwordRepeatLabel.setStyle(Styles.labelStyle);
+        passwordRepeatLabel.setFont(Font.font("Inter", 22));
+        passwordRepeatLabel.setPrefWidth(200);
+        passwordRepeatLabel.setWrapText(true);
+
+        PasswordField passwordRepeatField = new PasswordField();
+        passwordRepeatField.setStyle(Styles.inputFieldStyle);
+        passwordRepeatField.setPrefWidth(500);
+
+
+        HBox passwordRepeatHbox = new HBox();
+        passwordRepeatHbox.setPadding(new Insets(100, 0, 0, 140));
+        passwordRepeatHbox.getChildren().addAll(passwordRepeatLabel, passwordRepeatField);
+        passwordRepeatHbox.setSpacing(30);
+
 
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(usernameHbox, passwordHbox,passwordForgetLink);
+        vBox.getChildren().addAll(usernameHbox, passwordHbox, passwordRepeatHbox);
 
-        this.registerButton = new Button();
-        this.registerButton.setText("REGISTRIEREN");
-        this.registerButton.setStyle("-fx-background-color: #C3C3C3; " +
+        Button registerButton = new Button();
+        registerButton.setText("REGISTRIEREN");
+        registerButton.setStyle("-fx-background-color: #52321D;" +
                 "-fx-text-fill: #ffffff; " +
                 "-fx-font-size: 20px; " +
                 "-fx-border-radius: 0px; ");
-        this.registerButton.setPrefWidth(screenWidth / 2);
-        this.registerButton.setPrefHeight(100);
+        registerButton.setPrefWidth(screenWidth / 2);
+        registerButton.setPrefHeight(100);
 
-        this.loginButton = new Button();
-        this.loginButton.setStyle("-fx-background-color: #52321D;" +
+        this.backToLoginButton = new Button();
+        this.backToLoginButton.setStyle("-fx-background-color: #C3C3C3;" +
                 "-fx-text-fill: #ffffff; " +
                 "-fx-font-size: 20px; " +
-                "-fx-border-radius: 0px; ");
+                "-fx-border-radius: 0px;" +
+                "-fx-text-fill: #52321D;");
 
-        this.loginButton.setText("LOGIN");
-        this.loginButton.setPrefWidth(screenWidth / 2);
-        this.loginButton.setPrefHeight(100);
+        this.backToLoginButton.setText("ZURÜCK ZU LOGIN");
+        this.backToLoginButton.setPrefWidth(screenWidth / 2);
+        this.backToLoginButton.setPrefHeight(100);
 
 
         HBox footerHbox = new HBox();
-        footerHbox.getChildren().addAll(registerButton, loginButton);
+        footerHbox.getChildren().addAll(registerButton, this.backToLoginButton);
 
         // root
         BorderPane root = new BorderPane();
@@ -105,15 +122,12 @@ public class LoginPage {
         root.setBottom(footerHbox);
         root.setStyle("-fx-background-color: " + Styles.backgroundColor);
 
-        Scene scene = new Scene(root, 1024, 768);
 
+        Scene scene = new Scene(root, 1024, 768);
         return scene;
     }
 
-    public Button getRegisterButton() {
-        return this.registerButton;
-    }
-    public Button getLoginButton() {
-        return this.loginButton;
+    public Button getBackToLoginBtn() {
+        return this.backToLoginButton;
     }
 }

@@ -1,5 +1,6 @@
-package com.example.hasegmbhmitarbeitermanagerjavafx;
+package com.example.hasegmbhmitarbeitermanagerjavafx.pages;
 
+import com.example.hasegmbhmitarbeitermanagerjavafx.Styles;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;

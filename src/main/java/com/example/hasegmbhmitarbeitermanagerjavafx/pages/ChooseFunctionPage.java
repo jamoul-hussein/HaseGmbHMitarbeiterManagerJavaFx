@@ -1,6 +1,7 @@
-package com.example.hasegmbhmitarbeitermanagerjavafx;
+package com.example.hasegmbhmitarbeitermanagerjavafx.pages;
 
 
+import com.example.hasegmbhmitarbeitermanagerjavafx.Styles;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -46,8 +47,8 @@ public class ChooseFunctionPage {
                 " -fx-stroke-width: 1;" +
                 "-fx-background-color: #F4D8C3;" +
                 "-fx-text-alignment: center");
-        taskmgmt.setPrefHeight(screenHeight * 0.4);
-        taskmgmt.setPrefWidth(screenWidth * 0.17);
+        taskmgmt.setPrefHeight(screenHeight * 0.3);
+        taskmgmt.setPrefWidth(screenWidth * 0.11);
         taskmgmt.setWrapText(true);
 
         Button customermgmt = new Button();
@@ -58,8 +59,8 @@ public class ChooseFunctionPage {
                 " -fx-stroke-width: 1;" +
                 "-fx-background-color: #EACAB5;" +
                 "-fx-text-alignment: center");
-        customermgmt.setPrefHeight(screenHeight * 0.4);
-        customermgmt.setPrefWidth(screenWidth * 0.17);
+        customermgmt.setPrefHeight(screenHeight * 0.3);
+        customermgmt.setPrefWidth(screenWidth * 0.11);
         customermgmt.setWrapText(true);
 
         this.employeemgmt = new Button();
@@ -70,8 +71,8 @@ public class ChooseFunctionPage {
                 " -fx-stroke-width: 2;" +
                 "-fx-background-color: #CBAB96;" +
                 "-fx-text-alignment: center");
-        this.employeemgmt.setPrefHeight(screenHeight * 0.4);
-        this.employeemgmt.setPrefWidth(screenWidth * 0.17);
+        this.employeemgmt.setPrefHeight(screenHeight * 0.3);
+        this.employeemgmt.setPrefWidth(screenWidth * 0.11);
         this.employeemgmt.setWrapText(true);
 
 

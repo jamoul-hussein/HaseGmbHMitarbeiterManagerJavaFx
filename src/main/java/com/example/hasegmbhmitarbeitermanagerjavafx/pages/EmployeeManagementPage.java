@@ -1,5 +1,7 @@
-package com.example.hasegmbhmitarbeitermanagerjavafx;
+package com.example.hasegmbhmitarbeitermanagerjavafx.pages;
 
+import com.example.hasegmbhmitarbeitermanagerjavafx.employees.Employee;
+import com.example.hasegmbhmitarbeitermanagerjavafx.Styles;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -18,9 +20,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class EmployeeManagementPage {
 
