@@ -176,6 +176,7 @@ public class EditEmployeePage implements Page{
 				employeeController.updateEmployee(selectedId, firstnameField.getText(), lastnameField.getText(), emailField.getText(), telephoneField.getText());
 
 				stage.setScene(pageManager.findPage("employeeManagementPage").getScene());
+				((EmployeeManagementPage) pageManager.findPage("employeeManagementPage")).refreshTable();
 			} 
 		);
 	}

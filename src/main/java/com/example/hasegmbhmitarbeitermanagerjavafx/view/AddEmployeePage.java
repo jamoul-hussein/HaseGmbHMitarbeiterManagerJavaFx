@@ -161,6 +161,7 @@ public class AddEmployeePage implements Page{
 				EmployeeController employeeController = (EmployeeController) ControllerManager.getInstance().findController("employeeController");
 				employeeController.addEmployee(employeeController.getAllEmployees().size(), firstnameField.getText(), lastnameField.getText(), emailField.getText(), telephoneField.getText());
 				stage.setScene(pageManager.findPage("employeeManagementPage").getScene());
+				((EmployeeManagementPage) pageManager.findPage("employeeManagementPage")).refreshTable();
 			} 
 		);
 	}
