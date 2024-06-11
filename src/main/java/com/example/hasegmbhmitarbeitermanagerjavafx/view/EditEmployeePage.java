@@ -2,7 +2,7 @@ package com.example.hasegmbhmitarbeitermanagerjavafx.view;
 
 import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ControllerManager;
 import com.example.hasegmbhmitarbeitermanagerjavafx.controller.EmployeeController;
-import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ViewManager;
+import com.example.hasegmbhmitarbeitermanagerjavafx.controller.PageManager;
 import com.example.hasegmbhmitarbeitermanagerjavafx.view.Error.ErrorPage;
 
 import javafx.geometry.Insets;
@@ -160,14 +160,14 @@ public class EditEmployeePage implements Page{
 
 	@Override
 	public void registerButtons() {
-		ViewManager viewManager = ViewManager.getInstance();
-		gobackLink.setOnAction(e -> stage.setScene(viewManager.findScene("employeeManagementPage")));
+		PageManager pageManager = PageManager.getInstance();
+		gobackLink.setOnAction(e -> stage.setScene(pageManager.findPage("employeeManagementPage").getScene()));
 
 		saveButton.setOnAction(e -> 
 			{
 
 				if(selectedId == 0) {
-					stage.setScene(ViewManager.getInstance().findScene("EmployeeManagementPage"));
+					stage.setScene(PageManager.getInstance().findPage("EmployeeManagementPage").getScene());
 					new ErrorPage().showError("Error", "Not selected");
 					return;
 				}
@@ -175,7 +175,7 @@ public class EditEmployeePage implements Page{
 				EmployeeController employeeController = (EmployeeController) ControllerManager.getInstance().findController("employeeController");
 				employeeController.updateEmployee(selectedId, firstnameField.getText(), lastnameField.getText(), emailField.getText(), telephoneField.getText());
 
-				stage.setScene(viewManager.findScene("employeeManagementPage"));
+				stage.setScene(pageManager.findPage("employeeManagementPage").getScene());
 			} 
 		);
 	}

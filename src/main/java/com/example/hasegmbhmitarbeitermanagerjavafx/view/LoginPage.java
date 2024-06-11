@@ -2,7 +2,7 @@ package com.example.hasegmbhmitarbeitermanagerjavafx.view;
 
 import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ControllerManager;
 import com.example.hasegmbhmitarbeitermanagerjavafx.controller.LoginController;
-import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ViewManager;
+import com.example.hasegmbhmitarbeitermanagerjavafx.controller.PageManager;
 import com.example.hasegmbhmitarbeitermanagerjavafx.view.Error.ErrorPage;
 
 import javafx.geometry.Insets;
@@ -133,14 +133,14 @@ public class LoginPage implements Page {
 
     @Override
     public void registerButtons() {
-        ViewManager controller = ViewManager.getInstance();
-        registerButton.setOnAction(e -> stage.setScene(controller.findScene("registerPage")));
+        PageManager controller = PageManager.getInstance();
+        registerButton.setOnAction(e -> stage.setScene(controller.findPage("registerPage").getScene()));
         
         loginButton.setOnAction(e -> 
             {
                 boolean isAuthenticated = authenticate(usernameField.getText(), passwordField.getText());
                 if(isAuthenticated) {
-                    stage.setScene(controller.findScene("chooseFunctionPage"));
+                    stage.setScene(controller.findPage("chooseFunctionPage").getScene());
                 }
                 else {
                     new ErrorPage().showError("Error", "Error with username or password");

@@ -2,7 +2,7 @@ package com.example.hasegmbhmitarbeitermanagerjavafx.view;
 
 import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ControllerManager;
 import com.example.hasegmbhmitarbeitermanagerjavafx.controller.EmployeeController;
-import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ViewManager;
+import com.example.hasegmbhmitarbeitermanagerjavafx.controller.PageManager;
 import com.example.hasegmbhmitarbeitermanagerjavafx.model.Employee;
 
 import javafx.collections.FXCollections;
@@ -207,8 +207,8 @@ public class EmployeeManagementPage implements Page{
 
     @Override
     public void registerButtons() {
-        addEmployeeLink.setOnAction(e -> stage.setScene(ViewManager.getInstance().findScene("addEmployeePage")));    
-        editButton.setOnAction(e -> stage.setScene(ViewManager.getInstance().findScene("editEmployeePage")));
+        addEmployeeLink.setOnAction(e -> stage.setScene(PageManager.getInstance().findPage("addEmployeePage").getScene()));    
+        editButton.setOnAction(e -> stage.setScene(PageManager.getInstance().findPage("editEmployeePage").getScene()));
         refreshButton.setOnAction(e -> refreshTable());
         searchButton.setOnAction(e -> filter());
         deleteButton.setOnAction(e -> delete());

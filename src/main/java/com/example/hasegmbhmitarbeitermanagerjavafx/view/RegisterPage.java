@@ -2,7 +2,7 @@ package com.example.hasegmbhmitarbeitermanagerjavafx.view;
 
 import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ControllerManager;
 import com.example.hasegmbhmitarbeitermanagerjavafx.controller.LoginController;
-import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ViewManager;
+import com.example.hasegmbhmitarbeitermanagerjavafx.controller.PageManager;
 import com.example.hasegmbhmitarbeitermanagerjavafx.view.Error.ErrorPage;
 
 import javafx.geometry.Insets;
@@ -148,7 +148,7 @@ public class RegisterPage implements Page {
 
     @Override
     public void registerButtons() {
-        Scene scene = ViewManager.getInstance().findScene("loginPage");
+        Scene scene = PageManager.getInstance().findPage("loginPage").getScene();
         registerButton.setOnAction(e -> 
             {
                 boolean accountWasAdded = addAccount(usernameField.getText(), passwordField.getText(), passwordRepeatField.getText());
