@@ -5,9 +5,6 @@ import java.util.List;
 
 import com.example.hasegmbhmitarbeitermanagerjavafx.model.Employee;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 public class EmployeeController implements Controller {
 
     private List<Employee> employees;
@@ -25,6 +22,28 @@ public class EmployeeController implements Controller {
         }
 
         employees.add(new Employee(id, firstName, lastName, email, telephone));
+        return true;
+    }
+
+    /**
+     * Update employees, null values keep the old values
+     */
+    public boolean updateEmployee(int id, String firstName, String lastName, String email, String telephone) {
+        
+        if(!doesEmployeeExist(id)) {
+            System.err.println(String.format("Employee with id: %d was not found", id));
+            return false;
+        }
+
+        Employee oldEmployee = getEmployee(id); 
+        Employee updatedEmployee = new Employee(id, 
+                                                firstName == null ? oldEmployee.getFirstName() : firstName, 
+                                                lastName == null ? oldEmployee.getLastName() : lastName, 
+                                                email == null ? oldEmployee.getEmail() : email, 
+                                                telephone == null ? oldEmployee.getTelephone() : telephone
+        );
+
+        getAllEmployees().set(getAllEmployees().indexOf(oldEmployee), updatedEmployee);
         return true;
     }
 

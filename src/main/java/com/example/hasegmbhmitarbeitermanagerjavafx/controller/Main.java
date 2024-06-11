@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.example.hasegmbhmitarbeitermanagerjavafx.view.AddEmployeePage;
 import com.example.hasegmbhmitarbeitermanagerjavafx.view.ChooseFunctionPage;
+import com.example.hasegmbhmitarbeitermanagerjavafx.view.EditEmployeePage;
 import com.example.hasegmbhmitarbeitermanagerjavafx.view.EmployeeManagementPage;
 import com.example.hasegmbhmitarbeitermanagerjavafx.view.LoginPage;
 import com.example.hasegmbhmitarbeitermanagerjavafx.view.Page;
@@ -47,10 +48,11 @@ public class Main extends Application {
         ChooseFunctionPage chooseFunctionPage = new ChooseFunctionPage();
         EmployeeManagementPage employeeManagementPage = new EmployeeManagementPage();
         AddEmployeePage addEmployeePage = new AddEmployeePage();
+        EditEmployeePage editEmployeePage = new EditEmployeePage();
         
         //Add pages to list
 
-        List<Page> pages = new ArrayList<Page>(Arrays.asList(loginPage, registerPage, chooseFunctionPage, employeeManagementPage, addEmployeePage));
+        List<Page> pages = new ArrayList<Page>(Arrays.asList(loginPage, registerPage, chooseFunctionPage, employeeManagementPage, addEmployeePage, editEmployeePage));
         pages.forEach(page -> page.initializeScene(primaryStage));
 
         //Get view controller and add all pages to it.
@@ -63,6 +65,7 @@ public class Main extends Application {
         viewManager.register("chooseFunctionPage", chooseFunctionPage.getScene());
         viewManager.register("employeeManagementPage", employeeManagementPage.getScene());
         viewManager.register("addEmployeePage", addEmployeePage.getScene());
+        viewManager.register("editEmployeePage", addEmployeePage.getScene());
         
         //After registering all the pages, register all the buttons
         
