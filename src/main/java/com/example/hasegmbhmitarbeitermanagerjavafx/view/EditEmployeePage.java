@@ -153,10 +153,6 @@ public class EditEmployeePage implements Page{
 		return scene;
 	}
 
-	// TODO
-	// when deleting objects, basing the new id on the list size may result in id-conflicts
-
-
 	@Override
 	public void registerButtons() {
 		PageManager pageManager = PageManager.getInstance();

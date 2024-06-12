@@ -9,20 +9,23 @@ public class EmployeeController implements Controller {
 
     private List<Employee> employees;
     private Employee selectedEmployee;
+    private int availableId = 1;
 
     @Override
     public void init() {
         employees = new ArrayList<>();
     }
 
-    public boolean addEmployee(int id, String firstName, String lastName, String email, String telephone) {
+    public boolean addEmployee(String firstName, String lastName, String email, String telephone) {
         
-        if(doesEmployeeExist(id)){
-            System.err.println(String.format("Employee with id: %d already exists", id));
+        //In optimal case, this should never be run.
+        if(doesEmployeeExist(availableId)){
+            System.err.println(String.format("Employee with id: %d already exists", availableId));
             return false;
         }
 
-        employees.add(new Employee(id, firstName, lastName, email, telephone));
+        employees.add(new Employee(availableId, firstName, lastName, email, telephone));
+        availableId++; //Always increment by one
         return true;
     }
 
