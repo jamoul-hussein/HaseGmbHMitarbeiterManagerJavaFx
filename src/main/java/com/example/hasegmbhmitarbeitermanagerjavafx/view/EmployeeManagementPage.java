@@ -32,7 +32,6 @@ public class EmployeeManagementPage implements Page{
 
     private Hyperlink addEmployeeLink;
 
-    private Button refreshButton;
     private Button searchButton;
     private Button deleteButton;
     private Button editButton;
@@ -44,7 +43,6 @@ public class EmployeeManagementPage implements Page{
 
     private TableView<Employee> tableView;
     private ObservableList<Employee> data;
-    private FilteredList<Employee> filteredItems;
 
     private TableView renderTable() {
         // Create columns
@@ -146,15 +144,8 @@ public class EmployeeManagementPage implements Page{
         searchField.setPadding(new Insets(27, 0, 0, 0));
 
         // Create a Button and set the SVGPath as its graphic
-        refreshButton = new Button();
-        refreshButton.setStyle("-fx-background-color: #52321D; -fx-text-fill: #ffffff; -fx-border-radius: 0px;");
-        refreshButton.setText("refresh"); // Set the SVG as the button's graphic
-        refreshButton.setFont(Font.font("Inter", 22));
-        refreshButton.setPrefWidth(25);
-        refreshButton.setPrefHeight(15);
-
         HBox searchSection = new HBox();
-        searchSection.getChildren().addAll(searchButton, searchField, refreshButton);
+        searchSection.getChildren().addAll(searchButton, searchField);
         searchSection.setSpacing(20);
 
         this.addEmployeeLink = new Hyperlink("+ HINZUFÜGEN");
@@ -209,7 +200,6 @@ public class EmployeeManagementPage implements Page{
     public void registerButtons() {
         addEmployeeLink.setOnAction(e -> stage.setScene(PageManager.getInstance().findPage("addEmployeePage").getScene()));    
         editButton.setOnAction(e -> stage.setScene(PageManager.getInstance().findPage("editEmployeePage").getScene()));
-        refreshButton.setOnAction(e -> refreshTable());
         searchButton.setOnAction(e -> filter());
         deleteButton.setOnAction(e -> delete());
         
