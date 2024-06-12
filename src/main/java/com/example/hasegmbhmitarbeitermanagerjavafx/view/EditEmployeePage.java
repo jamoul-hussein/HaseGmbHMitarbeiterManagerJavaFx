@@ -167,13 +167,13 @@ public class EditEmployeePage implements Page{
 				
 				EmployeeController employeeController = (EmployeeController) ControllerManager.getInstance().findController("employeeController");
 
-				if(employeeController.getSelectedEmployee() == 0) {
+				if(employeeController.getSelectedEmployee() == null) {
 					stage.setScene(PageManager.getInstance().findPage("employeeManagementPage").getScene());
 					new ErrorPage().showError("Error", "Not selected");
 					return;
 				}
 
-				employeeController.updateEmployee(employeeController.getSelectedEmployee(), firstnameField.getText(), lastnameField.getText(), emailField.getText(), telephoneField.getText());
+				employeeController.updateEmployee(employeeController.getSelectedEmployee().getNumber(), firstnameField.getText(), lastnameField.getText(), emailField.getText(), telephoneField.getText());
 				
 				stage.setScene(pageManager.findPage("employeeManagementPage").getScene());
 				((EmployeeManagementPage) pageManager.findPage("employeeManagementPage")).refreshTable();
@@ -184,7 +184,7 @@ public class EditEmployeePage implements Page{
 	public boolean refresh() {
 		EmployeeController employeeController = (EmployeeController) ControllerManager.getInstance().findController("employeeController");
 
-		Employee employee = employeeController.getEmployee(employeeController.getSelectedEmployee());
+		Employee employee = employeeController.getSelectedEmployee();
 		firstnameField.setText(employee.getFirstName());
 		lastnameField.setText(employee.getLastName());
 		emailField.setText(employee.getEmail());

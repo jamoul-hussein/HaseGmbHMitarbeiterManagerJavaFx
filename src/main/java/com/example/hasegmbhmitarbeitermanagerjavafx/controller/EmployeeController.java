@@ -8,7 +8,7 @@ import com.example.hasegmbhmitarbeitermanagerjavafx.model.Employee;
 public class EmployeeController implements Controller {
 
     private List<Employee> employees;
-    private int selectedEmployee;
+    private Employee selectedEmployee;
 
     @Override
     public void init() {
@@ -77,11 +77,11 @@ public class EmployeeController implements Controller {
         return employees.stream().anyMatch(employee -> employee.getNumber() == id);
     }
 
-    public int getSelectedEmployee() {
+    public Employee getSelectedEmployee() {
         return selectedEmployee;
     }
 
-    public void setSelectedEmployee(int selectedEmployee) {
+    public void setSelectedEmployee(Employee selectedEmployee) {
         this.selectedEmployee = selectedEmployee;
     }
 

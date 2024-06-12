@@ -201,7 +201,7 @@ public class EmployeeManagementPage implements Page{
         addEmployeeLink.setOnAction(e -> stage.setScene(PageManager.getInstance().findPage("addEmployeePage").getScene()));    
         editButton.setOnAction(e -> {
             EmployeeController controller = (EmployeeController) ControllerManager.getInstance().findController("employeeController");
-            controller.setSelectedEmployee(tableView.getSelectionModel().getSelectedItem().getNumber());
+            controller.setSelectedEmployee(tableView.getSelectionModel().getSelectedItem());
     
             EditEmployeePage editPage = (EditEmployeePage) PageManager.getInstance().findPage("editEmployeePage");
             editPage.refresh();
