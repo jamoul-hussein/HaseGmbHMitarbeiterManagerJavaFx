@@ -70,7 +70,8 @@ public class EmployeeController implements Controller {
             System.err.println(String.format("Employee with id: %d does not exist", id));
             return null;
         }
-        return employees.get(id);
+
+        return employees.stream().filter(employee -> employee.getNumber() == id).toList().get(0);
     }
 
     public boolean doesEmployeeExist(int id) {
