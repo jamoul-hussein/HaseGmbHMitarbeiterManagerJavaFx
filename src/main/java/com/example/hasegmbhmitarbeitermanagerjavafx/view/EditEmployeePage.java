@@ -3,6 +3,7 @@ package com.example.hasegmbhmitarbeitermanagerjavafx.view;
 import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ControllerManager;
 import com.example.hasegmbhmitarbeitermanagerjavafx.controller.EmployeeController;
 import com.example.hasegmbhmitarbeitermanagerjavafx.controller.PageManager;
+import com.example.hasegmbhmitarbeitermanagerjavafx.model.Employee;
 import com.example.hasegmbhmitarbeitermanagerjavafx.view.Error.ErrorPage;
 
 import javafx.geometry.Insets;
@@ -25,8 +26,6 @@ public class EditEmployeePage implements Page{
 	private Hyperlink gobackLink;
 	private Button saveButton;
 
-	private int selectedId;
-
 	private TextField firstnameField;
 	private TextField lastnameField;
 	private TextField emailField;
@@ -45,7 +44,7 @@ public class EditEmployeePage implements Page{
 		double screenWidth = bounds.getWidth();
 
 		Text textHeader = new Text();
-		textHeader.setText("MITARBEITER HINZUFÜGEN");
+		textHeader.setText("MITARBEITER EDITIEREN");
 		textHeader.setFont(Font.font("Inter", 60));
 		textHeader.setStyle(Styles.headerStyle);
 
@@ -154,9 +153,9 @@ public class EditEmployeePage implements Page{
 		return scene;
 	}
 
-	public void setSelectedId(int selectedId) {
-		this.selectedId = selectedId;
-	}
+	// TODO
+	// when deleting objects, basing the new id on the list size may result in id-conflicts
+
 
 	@Override
 	public void registerButtons() {
@@ -165,19 +164,34 @@ public class EditEmployeePage implements Page{
 
 		saveButton.setOnAction(e -> 
 			{
+				
+				EmployeeController employeeController = (EmployeeController) ControllerManager.getInstance().findController("employeeController");
 
-				if(selectedId == 0) {
-					stage.setScene(PageManager.getInstance().findPage("EmployeeManagementPage").getScene());
+				if(employeeController.getSelectedEmployee() == 0) {
+					stage.setScene(PageManager.getInstance().findPage("employeeManagementPage").getScene());
 					new ErrorPage().showError("Error", "Not selected");
 					return;
 				}
 
-				EmployeeController employeeController = (EmployeeController) ControllerManager.getInstance().findController("employeeController");
-				employeeController.updateEmployee(selectedId, firstnameField.getText(), lastnameField.getText(), emailField.getText(), telephoneField.getText());
-
+				employeeController.updateEmployee(employeeController.getSelectedEmployee(), firstnameField.getText(), lastnameField.getText(), emailField.getText(), telephoneField.getText());
+				
 				stage.setScene(pageManager.findPage("employeeManagementPage").getScene());
 				((EmployeeManagementPage) pageManager.findPage("employeeManagementPage")).refreshTable();
 			} 
 		);
+	}
+
+	public boolean refresh() {
+		EmployeeController employeeController = (EmployeeController) ControllerManager.getInstance().findController("employeeController");
+
+		Employee employee = employeeController.getEmployee(employeeController.getSelectedEmployee());
+		firstnameField.setText(employee.getFirstName());
+		lastnameField.setText(employee.getLastName());
+		emailField.setText(employee.getEmail());
+		telephoneField.setText(employee.getTelephone());
+
+		System.out.println(String.format("Numb: %d First %s Last %s Tele %s Email %s", employee.getNumber(), employee.getFirstName(), employee.getLastName(), employee.getTelephone(), employee.getEmail()));
+		
+		return true;
 	}
 }

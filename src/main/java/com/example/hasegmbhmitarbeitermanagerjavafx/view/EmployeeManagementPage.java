@@ -199,7 +199,16 @@ public class EmployeeManagementPage implements Page{
     @Override
     public void registerButtons() {
         addEmployeeLink.setOnAction(e -> stage.setScene(PageManager.getInstance().findPage("addEmployeePage").getScene()));    
-        editButton.setOnAction(e -> stage.setScene(PageManager.getInstance().findPage("editEmployeePage").getScene()));
+        editButton.setOnAction(e -> {
+            EmployeeController controller = (EmployeeController) ControllerManager.getInstance().findController("employeeController");
+            controller.setSelectedEmployee(tableView.getSelectionModel().getSelectedItem().getNumber());
+    
+            EditEmployeePage editPage = (EditEmployeePage) PageManager.getInstance().findPage("editEmployeePage");
+            editPage.refresh();
+
+            stage.setScene(PageManager.getInstance().findPage("editEmployeePage").getScene());
+        });
+        
         searchButton.setOnAction(e -> filter());
         deleteButton.setOnAction(e -> delete());
         

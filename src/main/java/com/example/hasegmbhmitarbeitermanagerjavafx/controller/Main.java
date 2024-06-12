@@ -65,7 +65,7 @@ public class Main extends Application {
         pageManager.register("chooseFunctionPage", chooseFunctionPage);
         pageManager.register("employeeManagementPage", employeeManagementPage);
         pageManager.register("addEmployeePage", addEmployeePage);
-        pageManager.register("editEmployeePage", addEmployeePage);
+        pageManager.register("editEmployeePage", editEmployeePage);
         
         //After registering all the pages, register all the buttons
         
