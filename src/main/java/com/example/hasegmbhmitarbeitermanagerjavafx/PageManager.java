@@ -1,4 +1,4 @@
-package com.example.hasegmbhmitarbeitermanagerjavafx.controller;
+package com.example.hasegmbhmitarbeitermanagerjavafx;
 
 import java.util.HashMap;
 

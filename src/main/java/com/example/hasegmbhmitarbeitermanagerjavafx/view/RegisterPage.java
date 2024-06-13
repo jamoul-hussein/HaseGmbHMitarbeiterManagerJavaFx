@@ -1,8 +1,8 @@
 package com.example.hasegmbhmitarbeitermanagerjavafx.view;
 
-import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ControllerManager;
+import com.example.hasegmbhmitarbeitermanagerjavafx.ControllerManager;
 import com.example.hasegmbhmitarbeitermanagerjavafx.controller.LoginController;
-import com.example.hasegmbhmitarbeitermanagerjavafx.controller.PageManager;
+import com.example.hasegmbhmitarbeitermanagerjavafx.PageManager;
 import com.example.hasegmbhmitarbeitermanagerjavafx.view.Error.ErrorPage;
 
 import javafx.geometry.Insets;
@@ -21,7 +21,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class RegisterPage implements Page {
-    
+
     private Button registerButton;
     private Button backToLoginButton;
 
@@ -34,7 +34,7 @@ public class RegisterPage implements Page {
 
     @Override
     public void initializeScene(Stage stage) {
-        
+
         this.stage = stage;
 
         Screen screen = Screen.getPrimary();
@@ -149,7 +149,7 @@ public class RegisterPage implements Page {
     @Override
     public void registerButtons() {
         Scene scene = PageManager.getInstance().findPage("loginPage").getScene();
-        registerButton.setOnAction(e -> 
+        registerButton.setOnAction(e ->
             {
                 boolean accountWasAdded = addAccount(usernameField.getText(), passwordField.getText(), passwordRepeatField.getText());
                 if(accountWasAdded) {
@@ -164,29 +164,31 @@ public class RegisterPage implements Page {
     private boolean addAccount(String name, String password, String repeatedPassword) {
 
         LoginController loginController = (LoginController) ControllerManager.getInstance().findController("loginController");
-        
+
+        ErrorPage errorPage = new ErrorPage();
+
         if(name.isEmpty()) {
-            new ErrorPage().showError("Error", "Username is empty");
+            errorPage.showError("Error", "Username is empty");
             return false;
         }
 
         if(password.isEmpty()) {
-            new ErrorPage().showError("Error", "Password is empty");
+            errorPage.showError("Error", "Password is empty");
             return false;
         }
 
         if(repeatedPassword.isEmpty()) {
-            new ErrorPage().showError("Error", "Repeated password is empty");
+            errorPage.showError("Error", "Repeated password is empty");
             return false;
         }
 
         if(loginController.doesAccountExist(name)) {
-            new ErrorPage().showError("Error", "User already exists");
+            errorPage.showError("Error", "User already exists");
             return false;
         }
 
         if(!password.equals(repeatedPassword)){
-            new ErrorPage().showError("Error", "Password doesn't match the repeated password");
+            errorPage.showError("Error", "Password doesn't match the repeated password");
             return false;
         }
 

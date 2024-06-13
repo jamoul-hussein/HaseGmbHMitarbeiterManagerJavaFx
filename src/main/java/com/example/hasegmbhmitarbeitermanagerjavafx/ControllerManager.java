@@ -1,11 +1,13 @@
-package com.example.hasegmbhmitarbeitermanagerjavafx.controller;
+package com.example.hasegmbhmitarbeitermanagerjavafx;
+
+import com.example.hasegmbhmitarbeitermanagerjavafx.controller.Controller;
 
 import java.util.HashMap;
 
 public class ControllerManager {
     
     private static ControllerManager instance;
-    private HashMap<String,Controller> controllers;
+    private HashMap<String, Controller> controllers;
 
     /**
      * Just for initialization

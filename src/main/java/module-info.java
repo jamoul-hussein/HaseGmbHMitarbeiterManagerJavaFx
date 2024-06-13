@@ -11,4 +11,6 @@ module com.example.hasegmbhmitarbeitermanagerjavafx {
     exports com.example.hasegmbhmitarbeitermanagerjavafx.controller;
     exports com.example.hasegmbhmitarbeitermanagerjavafx.view;
     exports com.example.hasegmbhmitarbeitermanagerjavafx.model;
+    exports com.example.hasegmbhmitarbeitermanagerjavafx;
+    opens com.example.hasegmbhmitarbeitermanagerjavafx to javafx.fxml;
 }

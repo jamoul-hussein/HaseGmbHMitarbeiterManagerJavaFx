@@ -1,18 +1,13 @@
 package com.example.hasegmbhmitarbeitermanagerjavafx.view;
 
-import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ControllerManager;
+import com.example.hasegmbhmitarbeitermanagerjavafx.ControllerManager;
 import com.example.hasegmbhmitarbeitermanagerjavafx.controller.LoginController;
-import com.example.hasegmbhmitarbeitermanagerjavafx.controller.PageManager;
+import com.example.hasegmbhmitarbeitermanagerjavafx.PageManager;
 import com.example.hasegmbhmitarbeitermanagerjavafx.view.Error.ErrorPage;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -91,7 +86,7 @@ public class LoginPage implements Page {
         passwordForgetLink.setPadding(new Insets(100, 0, 0, 620));
 
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(usernameHbox, passwordHbox,passwordForgetLink);
+        vBox.getChildren().addAll(usernameHbox, passwordHbox, passwordForgetLink);
 
         this.registerButton = new Button();
         this.registerButton.setText("REGISTRIEREN");
@@ -135,40 +130,41 @@ public class LoginPage implements Page {
     public void registerButtons() {
         PageManager controller = PageManager.getInstance();
         registerButton.setOnAction(e -> stage.setScene(controller.findPage("registerPage").getScene()));
-        
-        loginButton.setOnAction(e -> 
-            {
-                boolean isAuthenticated = authenticate(usernameField.getText(), passwordField.getText());
-                if(isAuthenticated) {
-                    stage.setScene(controller.findPage("chooseFunctionPage").getScene());
+
+        loginButton.setOnAction(e ->
+                {
+                    boolean isAuthenticated = authenticate(usernameField.getText(), passwordField.getText());
+                    if (isAuthenticated) {
+                        stage.setScene(controller.findPage("chooseFunctionPage").getScene());
+                    } else {
+                        new ErrorPage().showError("Error", "Error with username or password");
+                    }
                 }
-                else {
-                    new ErrorPage().showError("Error", "Error with username or password");
-                }
-            }
         );
-        
+
         passwordForgetLink.setOnAction(e -> new ErrorPage().showError("Ha!", "Sounds like a you problem 😎"));
 
     }
 
     /**
      * Check if user is authenticated.
+     *
      * @param name
      * @param password
      * @return true, when name and password matches.
      */
     private boolean authenticate(String name, String password) {
 
-        LoginController loginController = (LoginController) ControllerManager.getInstance().findController("loginController");
-        
+        LoginController loginController = (LoginController) ControllerManager.getInstance()
+                .findController("loginController");
+
         //Get users
-        if(!loginController.doesAccountExist(name)){
+        if (!loginController.doesAccountExist(name)) {
             return false;
         }
-        
+
         return loginController.getAllAccounts()
-                              .stream()
-                              .anyMatch(user -> user.getName().equals(name) && user.getPassword().equals(password));
+                .stream()
+                .anyMatch(user -> user.getName().equals(name) && user.getPassword().equals(password));
     }
 }

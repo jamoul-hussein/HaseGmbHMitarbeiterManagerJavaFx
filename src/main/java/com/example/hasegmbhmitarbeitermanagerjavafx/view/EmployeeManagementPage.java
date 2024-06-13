@@ -1,13 +1,12 @@
 package com.example.hasegmbhmitarbeitermanagerjavafx.view;
 
-import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ControllerManager;
+import com.example.hasegmbhmitarbeitermanagerjavafx.ControllerManager;
 import com.example.hasegmbhmitarbeitermanagerjavafx.controller.EmployeeController;
-import com.example.hasegmbhmitarbeitermanagerjavafx.controller.PageManager;
+import com.example.hasegmbhmitarbeitermanagerjavafx.PageManager;
 import com.example.hasegmbhmitarbeitermanagerjavafx.model.Employee;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -29,9 +28,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class EmployeeManagementPage implements Page{
-
     private Hyperlink addEmployeeLink;
-
     private Button searchButton;
     private Button deleteButton;
     private Button editButton;
@@ -245,8 +242,8 @@ public class EmployeeManagementPage implements Page{
         }
 
         controller.removeEmployee(id);
-        
         refreshTable();
+
         return true;
     }
 }

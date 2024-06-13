@@ -1,8 +1,8 @@
 package com.example.hasegmbhmitarbeitermanagerjavafx.view;
 
-import com.example.hasegmbhmitarbeitermanagerjavafx.controller.ControllerManager;
+import com.example.hasegmbhmitarbeitermanagerjavafx.ControllerManager;
 import com.example.hasegmbhmitarbeitermanagerjavafx.controller.EmployeeController;
-import com.example.hasegmbhmitarbeitermanagerjavafx.controller.PageManager;
+import com.example.hasegmbhmitarbeitermanagerjavafx.PageManager;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
@@ -154,7 +154,9 @@ public class AddEmployeePage implements Page{
 	@Override
 	public void registerButtons() {
 		PageManager pageManager = PageManager.getInstance();
-		gobackLink.setOnAction(e -> stage.setScene(pageManager.findPage("employeeManagementPage").getScene()));
+		Scene employeeManagementPageScene = pageManager.findPage("employeeManagementPage").getScene();
+
+		gobackLink.setOnAction(e -> stage.setScene(employeeManagementPageScene));
 
 		saveButton.setOnAction(e -> 
 			{

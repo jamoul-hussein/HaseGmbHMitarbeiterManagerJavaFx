@@ -1,10 +1,11 @@
-package com.example.hasegmbhmitarbeitermanagerjavafx.controller;
+package com.example.hasegmbhmitarbeitermanagerjavafx;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.example.hasegmbhmitarbeitermanagerjavafx.controller.*;
 import com.example.hasegmbhmitarbeitermanagerjavafx.view.AddEmployeePage;
 import com.example.hasegmbhmitarbeitermanagerjavafx.view.ChooseFunctionPage;
 import com.example.hasegmbhmitarbeitermanagerjavafx.view.EditEmployeePage;
@@ -26,14 +27,15 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws FileNotFoundException {
         
         // Create controllers, initialize them
-        Controller testController = new TestController(); // <- example controller
         EmployeeController employeeController = new EmployeeController();
         LoginController loginController = new LoginController();
 
-        List<Controller> controllers = new ArrayList<Controller>(Arrays.asList(testController, employeeController, loginController));
+        List<Controller> controllers = new ArrayList<Controller>();
+        controllers.add(employeeController);
+        controllers.add(loginController);
+
         controllers.forEach(c -> c.init());
         
-        ControllerManager.getInstance().register("testController", testController); //you can remove this controller
         ControllerManager.getInstance().register("employeeController", employeeController);
         ControllerManager.getInstance().register("loginController", loginController);
 
@@ -68,7 +70,6 @@ public class Main extends Application {
         pageManager.register("editEmployeePage", editEmployeePage);
         
         //After registering all the pages, register all the buttons
-        
         pages.forEach(page -> page.registerButtons());
 
         primaryStage.setTitle("Hase GmbH");
